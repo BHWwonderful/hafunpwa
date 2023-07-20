@@ -1,0 +1,52 @@
+.content{
+  display: flex;
+  justify-content: space-between;
+  height:96px;
+  padding: 1rem 1rem;
+  background-color: var(--content-background-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  margin-bottom:1rem;
+}
+
+.beginner{
+  background-color: var(--beginner-background-color);
+  border: 5px solid var(--secondary-color)
+}
+
+.intermediate{
+  background-color: var(--intermediate-background-color);
+  border: 5px solid var(--tertiary-color);
+}
+
+.advanced{
+  background-color: var(--advanced-background-color);
+  border: 5px solid var(--primary-color);
+}
+
+.proficient{
+  background-color: var(--proficient-background-color);
+  border: 5px solid var(--accent-color);
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title{
+  font-size: 1.5rem;
+}
+
+.text{
+  color: var(--content-text-color);
+}
+
+.img{
+  width:56px;
+  height:56px;
+  border-radius: 100%;
+  border: 5px solid var(--content-border-color);
+  background-color: white;
+}

@@ -1,0 +1,9 @@
+.button{
+  cursor: pointer;
+  padding:0.5rem;
+  border: 1px solid var(--content-border-color);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,36 @@
+.wrap{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title{
+  margin-bottom: 1.5rem;
+}
+
+.title h2{
+  font-size: 2rem;
+}
+
+.img{
+  width: 136px;
+  height: 136px;
+  border-radius: var(--border-radius);
+}
+
+.categories{
+  width: 288px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.categories h2{
+  text-align: center;
+  margin-bottom: 24px;
+}
