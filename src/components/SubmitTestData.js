@@ -17,6 +17,9 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
   const [isCorrect, setIsCorrect] = useState(null);
 
   const handleIsCorrect = () => {
+    if(currentChoice === ""){
+      return null;
+    }
     if(currentAnswer === currentChoice){
       setIsCorrect(true);
       dispatch(levelTestActions.addTotalPoint(currentPoint));

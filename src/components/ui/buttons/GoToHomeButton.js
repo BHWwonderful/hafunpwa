@@ -12,7 +12,7 @@ function GoToHomeButton(){
   const navigate = useNavigate();
 
   const handleGoBackToHomePage = () => {
-    navigate('/');
+    navigate("/");
   }
 
   return(

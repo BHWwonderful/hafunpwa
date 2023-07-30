@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 // actions
 import { levelTestActions } from "../store/leveltest-slice";
-import { topicActions } from "../store/topic-slice";
 
 function TestResult(){
 

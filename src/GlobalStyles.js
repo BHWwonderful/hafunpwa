@@ -27,8 +27,8 @@ font-weight: 700;
 --tertiary-color:rgba(212, 217, 32, 1);
 
 --content-text-color: rgba(136, 136, 136, 1);
---content-background-color: rgba(231, 231, 231, 1);
---content-border-color: rgba(144, 144, 144, 1);
+--content-background-color: rgba(211, 211, 211, 1);
+--content-border-color: rgba(104, 104, 104, 1);
 
 --beginner-background-color: rgba(255, 237, 99, 0.3);
 --intermediate-background-color: rgba(212, 217, 32, 0.3);

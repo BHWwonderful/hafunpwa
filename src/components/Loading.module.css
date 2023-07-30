@@ -14,17 +14,19 @@
 }
 
 .text{
-  font-size: 1rem;
+  text-align: center;
+  font-size: 2rem;
+  padding-top: 1rem;
 }
 
 .path3{
-  animation: movePath3 0.5s infinite;
+  animation: movePath3 0.4s infinite;
   animation-direction: alternate;
   animation-timing-function: cubic-bezier(.5,0.05,1,.5);
 }
 
 .path4{
-  animation: movePath4 0.5s infinite;
+  animation: movePath4 0.4s infinite;
   animation-direction: alternate;
   animation-timing-function: cubic-bezier(.5,0.05,1,.5);
   animation-delay: 0.25s;
@@ -35,7 +37,7 @@
     transform: translateY(0);
   }
   100% {
-    transform: translateY(10px);
+    transform: translateY(24px);
   }
 }
 
@@ -44,6 +46,6 @@
     transform: translateY(0);
   }
   100% {
-    transform: translateY(10px);
+    transform: translateY(24px);
   }
 }
