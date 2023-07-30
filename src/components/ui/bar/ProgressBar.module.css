@@ -12,3 +12,19 @@
   border-radius: var(--border-radius);
   background-color: var(--secondary-color);
 }
+
+.beginner{
+  background-color: var(--secondary-color);
+}
+
+.intermediate{
+  background-color: var(--tertiary-color);
+}
+
+.fluent{
+  background-color: var(--primary-color);
+}
+
+.advanced{
+  background-color: var(--accent-color);
+}

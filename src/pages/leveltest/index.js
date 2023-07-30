@@ -87,6 +87,7 @@ function LevelTest(){
             <Progressbar
               totalContent={totalLevelTestData}
               currentContent={currentLevelTestData}
+              userLevel={userLevel}
             />
           </div>
         </header>
