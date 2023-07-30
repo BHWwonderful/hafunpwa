@@ -16,7 +16,7 @@ import Qna from "./pages/qna";
 import Profile from "./pages/profile";
 import LevelTest from "./pages/leveltest";
 import TopicSearchPage from "./pages/topic/search";
-import LevelTestResult from "./pages/leveltest/result";
+import TopicDetailPage from "./pages/topic/detail";
 
 
 function App() {
@@ -39,11 +39,11 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/topic" element={<Topic />} />
               <Route path="/topic/search" element={<TopicSearchPage />} />
+              <Route path="/topic/detail/:id" element={<TopicDetailPage/>} />
               <Route path="/lifestyle" element={<Lifestyle />} />
               <Route path="/qna" element={<Qna />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/leveltest/" element={<LevelTest />} />
-              <Route path="/leveltest/result" element={<LevelTestResult />} />
             </Routes>
         </BrowserRouter>
       </Provider>

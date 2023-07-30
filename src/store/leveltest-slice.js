@@ -63,7 +63,7 @@ const levelTestSlice = createSlice({
       state.dataStatus= "idle";
       state.imageDataStatus= "idle";
     },
-    resetTestdata(state){
+    resetTestData(state){
       state.totalLevelTestData = [];
       state.currentLevelTestData = [];
     },

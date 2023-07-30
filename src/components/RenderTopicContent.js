@@ -20,6 +20,7 @@ function RenderTopicContent(){
               text={data.text}
               title={data.title}
               level={data.level}
+              id={data.id}
             />
           </div>
         )

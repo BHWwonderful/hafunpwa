@@ -4,14 +4,12 @@ import styles from "./SubmitTestData.module.css";
 // hooks
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // actions
 import { levelTestActions } from "../store/leveltest-slice";
+import { topicActions } from "../store/topic-slice";
 
 function SubmitTestData({totalContent, currentContent, currentAnswer, currentChoice, totalPoint, userLevel}){
-  
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const currentPoint = useSelector((state) => state.levelTest.currentPoint);
@@ -38,14 +36,17 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
     if(currentContent.length === totalContent.length){
       setIsCorrect(null);
       if(totalPoint < 6 && userLevel === "beginner" ){
+        dispatch(topicActions.changeCurrentLevel("beginner"));
         dispatch(levelTestActions.changeIsResultShow());
       } else if(totalPoint >= 6 && userLevel === "beginner"){
         dispatch(levelTestActions.resetCurrentImage());
         dispatch(levelTestActions.resetClickedChoiceIndex());
         dispatch(levelTestActions.resetDataStatus());
         dispatch(levelTestActions.changeUserLevel("intermediate"));
+        dispatch(topicActions.changeCurrentLevel("intermediate"));
         dispatch(levelTestActions.addQuestionIndex());
       } else if(totalPoint < 18 && userLevel === "intermediate"){
+        dispatch(topicActions.changeCurrentLevel("intermediate"));
         dispatch(levelTestActions.changeIsResultShow());
       } else if(totalPoint >= 18 && userLevel === "intermediate"){
         dispatch(levelTestActions.resetCurrentImage());
@@ -54,6 +55,7 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
         dispatch(levelTestActions.changeUserLevel("fluent"));
         dispatch(levelTestActions.addQuestionIndex());
       } else if(totalPoint < 33 && userLevel === "fluent"){
+        dispatch(topicActions.changeCurrentLevel("fluent"));
         dispatch(levelTestActions.changeIsResultShow());
       } else if(totalPoint >= 33 && userLevel === "fluent"){
         dispatch(levelTestActions.resetCurrentImage());
@@ -62,9 +64,10 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
         dispatch(levelTestActions.changeUserLevel("advanced"));
         dispatch(levelTestActions.addQuestionIndex());
       } else if(totalPoint < 52 && userLevel === "advanced"){
-        dispatch(levelTestActions.changeUserLevel("fluent"));
+        dispatch(topicActions.changeCurrentLevel("fluent"));
         dispatch(levelTestActions.changeIsResultShow());
       } else if(totalPoint >= 52 && userLevel === "advanced"){
+        dispatch(topicActions.changeCurrentLevel("advanced"));
         dispatch(levelTestActions.changeIsResultShow());
       }
     }

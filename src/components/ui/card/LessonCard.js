@@ -1,7 +1,16 @@
 // CSS
-import styles from "./LessonCard.module.css"
+import styles from "./LessonCard.module.css";
 
-function LessonCard({title, text, level}){
+// hooks
+import { useNavigate } from "react-router-dom";
+
+function LessonCard({title, text, level, id}){
+
+  const navigate = useNavigate();
+
+  const handleGoToTopicDetailPage = (id, event) => {
+    navigate(`/topic/detail/${id}`);
+  }
 
   let lessonCardClassName;
 
@@ -27,7 +36,7 @@ function LessonCard({title, text, level}){
   }
 
   return(
-    <a className={lessonCardClassName}>
+    <a onClick={(event) => handleGoToTopicDetailPage(id)} className={lessonCardClassName}>
       <div className={styles.info}>
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.text}>{text}</p>

@@ -19,6 +19,7 @@ function Topic(){
   const { currentLevel, filteredData } = useSelector((state) => state.topic);
 
   useEffect(() => {
+    console.log(currentLevel);
     dispatch(fetchTopicDataByLevel(currentLevel));
     return () => {
       dispatch(topicActions.resetCurrentLevel())

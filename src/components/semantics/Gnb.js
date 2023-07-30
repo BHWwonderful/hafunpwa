@@ -39,6 +39,7 @@ function Gnb(){
 
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location.pathname)
 
   const handleChangeRoute = (event, path) => {
     navigate(`${path}`);
@@ -46,11 +47,11 @@ function Gnb(){
 
   const getImgSrc = (path, id) => {
     if(location.pathname === "/" && id === "home"){
-      return "images/homeActive.svg"
+      return "/images/homeActive.svg"
     } else if(location.pathname.includes(path) && id !== "home"){
-      return `images/${id}Active.svg`;
+      return `/images/${id}Active.svg`;
     } else if(location.pathname.includes("leveltest") && id == "home"){
-      return "images/homeActive.svg"
+      return "/images/homeActive.svg"
     } else{
       return `/images/${id}.svg`;
     }

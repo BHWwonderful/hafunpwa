@@ -32,8 +32,13 @@ function Progressbar({totalContent, currentContent, userLevel}){
   }
 
   useEffect(() => {
-    const newBarLength = (currentContent.length / totalContent.length) * 100;
-    setBarLength(newBarLength);
+    if(currentContent.length !== 0 && totalContent.length !== 0){
+      const newBarLength = (currentContent.length / totalContent.length) * 100;
+      setBarLength(newBarLength);
+    } else{
+      setBarLength(0)
+    }
+    
   }, [currentContent.length, totalContent.length])
   
 

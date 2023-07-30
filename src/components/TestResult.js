@@ -16,21 +16,19 @@ function TestResult(){
   const navigate = useNavigate();
 
   const userLevel = useSelector((state) => state.levelTest.userLevel);
-  const totalLevelTestData = useSelector((state) => state.levelTest.totalLevelTestData);
-  const currentLevelTestData = useSelector((state) => state.levelTest.currentLevelTestData);
+  const currentLevel = useSelector((state) => state.topic.currentLevel);
 
-  const goToTopicPage = (userLevel) => {
-    dispatch(topicActions.changeCurrentLevel(userLevel))
+  useEffect(() => {
+    dispatch(levelTestActions.resetTestData());
+  }, [])
+
+  const goToTopicPage = () => {
     navigate("/topic");
   }
 
-  useEffect(() => {
-    dispatch(levelTestActions.resetTestdata());
-  }, [])
-
   let userLevelClass;
 
-  switch (userLevel) {
+  switch (currentLevel) {
     case "beginner":
       userLevelClass = styles.beginner;
       break;
@@ -58,7 +56,7 @@ function TestResult(){
         <h2 className={styles.title}>Your <strong>current level</strong> is</h2>
       </div>
       <div className={`${styles.buttonContent} ${userLevelClass}`}>
-        {userLevel}
+        {currentLevel}
       </div>
       <div className={styles.links}>
         <a onClick={() => goToTopicPage(userLevel)} className={styles.link}>Go to Topic Page</a>
