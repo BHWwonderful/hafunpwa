@@ -1,27 +1,60 @@
 // CSS
-import styles from "./RenderTestContent.module.css"
+import styles from "./RenderTestContent.module.css";
 
-function RenderTestContent({filteredData}){
+// hooks
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-  console.log(filteredData);
-  
-  return(
-    <section className={styles.content}>
-      <div>
+// actions
+import { levelTestActions } from "../store/leveltest-slice";
+
+// Components
+import TestChoices from "./ui/card/TestChoices";
+
+// custom hooks
+import underlineAnswer from "../api/underlineAnswer";
+
+// async hooks
+import { fetchLevelTestImageUrl } from "../store/leveltest-slice";
+
+function RenderTestContent({currentLevelTestData, clickedChoiceIndex, currentImage, dataStatus, imageDataStatus}){
+
+  const latestLevelTestData = currentLevelTestData[currentLevelTestData.length-1];
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(levelTestActions.resetCurrentImage());
+    dispatch(levelTestActions.changeCurrentAnswer(latestLevelTestData.answer));
+    dispatch(levelTestActions.changeCurrentPoint(latestLevelTestData.point));
+    if(latestLevelTestData.type === "guess"){
+      dispatch(fetchLevelTestImageUrl(latestLevelTestData.img))
+    }
+  }, [latestLevelTestData])
+
+  if(dataStatus === "loading" || imageDataStatus === "loading"){
+    return(
+      <div></div>
+    )
+  }
+   else {
+    return(
+      <div className={styles.content}>
+      <div className={styles.type}>
         <h2>Q. <strong>Fill in</strong> the blank</h2>
       </div>
-      <div>
-        <h2>{filteredData.question}</h2>
+      <div className={styles.question}>
+        {currentImage ? <img className={styles.img} src={currentImage} /> : null}
+        <h2 dangerouslySetInnerHTML={{ __html: underlineAnswer(latestLevelTestData.question)}}></h2>
       </div>
       <div className={styles.choices}>
-        {filteredData.choices.map((choice, index) => {
-          return(
-            <span key={index}>{choice}</span>
-          )
-        })}
+        <TestChoices
+          choices={latestLevelTestData.choices}
+          clickedChoiceIndex={clickedChoiceIndex}
+        />
       </div>
-    </section>
-  )
+    </div>
+    )
+  }
 }
 
 export default RenderTestContent;

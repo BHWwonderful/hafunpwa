@@ -14,16 +14,24 @@ import Logo from "../assets/images/Logo.svg"
 
 function Home(){
   return(
-    <MobileWrapper>
-      <Header
-        leftChild={<img src={Logo} />}
-        rightChild={<LanguageSelectorButton />}
-      />
-      <GoToLevelTest />
-      <LevelCategory />
-      <LifestyleCategory />
+    <>
+      <MobileWrapper>
+        <Header
+          leftChild={<img src={Logo} />}
+          rightChild={<LanguageSelectorButton />}
+        />
+        <div>
+          <GoToLevelTest />
+        </div>
+        <div>
+          <LevelCategory />
+        </div>
+        <div>
+          <LifestyleCategory />
+        </div>
+      </MobileWrapper>
       <Gnb />
-    </MobileWrapper>
+    </>
   )
 }
 

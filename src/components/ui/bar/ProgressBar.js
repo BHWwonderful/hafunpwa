@@ -1,10 +1,22 @@
 // CSS
-import styles from "./ProgressBar.module.css"
+import styles from "./ProgressBar.module.css";
 
-function Progressbar(){
+// hooks
+import { useEffect, useState } from "react";
+
+function Progressbar({totalContent, currentContent}){
+
+  const [barLength, setBarLength] = useState(0);
+
+  useEffect(() => {
+    const newBarLength = (currentContent.length / totalContent.length) * 100;
+    setBarLength(newBarLength);
+  }, [currentContent.length, totalContent.length])
+  
+
   return(
     <div className={styles.bar}>
-      <div className={styles.progress}></div>
+      <div style={{width: `${barLength}%`}} className={styles.progress}></div>
     </div>
   )
 }

@@ -8,27 +8,12 @@
   position:relative;
   align-items: center;
   justify-content: space-between;
+  min-width:250px;
   background-color: var(--content-background-color);
   border-radius: var(--border-radius);
   padding: 0.5rem 1rem;
   z-index:11;
   cursor: pointer;
-}
-
-.beginner{
-  background-color: var(--beginner-background-color);
-}
-
-.intermediate{
-  background-color: var(--intermediate-background-color);
-}
-
-.advanced{
-  background-color: var(--advanced-background-color);
-}
-
-.proficient{
-  background-color: var(--proficient-background-color);
 }
 
 .level{

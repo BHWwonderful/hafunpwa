@@ -1,12 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore/lite';
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { getAuth } from "firebase/auth";
+import { getStorage, ref } from "firebase/storage";
 
 // 파이어베이스 설정과 관련된 개인 정보
 const firebaseConfig = {
@@ -24,5 +20,13 @@ const app = initializeApp(firebaseConfig);
 
 // firebase의 firestore 인스턴스를 변수에 저장
 const db = getFirestore(app);
+
+// getStorage 인스턴스를 변수에 저장
+export const storage = getStorage();
+
+// storage 참조 변수를 선언
+export const storageRef = ref(storage);
+
+export const auth = getAuth(app);
 
 export default db;

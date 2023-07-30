@@ -14,12 +14,12 @@ function LessonCard({title, text, level}){
       lessonCardClassName = `${styles.content} ${styles.intermediate}`
       break;
 
-    case "advanced":
-      lessonCardClassName = `${styles.content} ${styles.advanced}`;
+    case "fluent":
+      lessonCardClassName = `${styles.content} ${styles.fluent}`;
       break;
 
-    case "proficient":
-      lessonCardClassName = `${styles.content} ${styles.proficient}`;
+    case "advanced":
+      lessonCardClassName = `${styles.content} ${styles.advanced}`;
       break;
 
     default:

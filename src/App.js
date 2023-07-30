@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
+import React from "react";
 
 // redux store
 import store from "./store";
@@ -15,6 +16,7 @@ import Qna from "./pages/qna";
 import Profile from "./pages/profile";
 import LevelTest from "./pages/leveltest";
 import TopicSearchPage from "./pages/topic/search";
+import LevelTestResult from "./pages/leveltest/result";
 
 
 function App() {
@@ -41,6 +43,7 @@ function App() {
               <Route path="/qna" element={<Qna />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/leveltest/" element={<LevelTest />} />
+              <Route path="/leveltest/result" element={<LevelTestResult />} />
             </Routes>
         </BrowserRouter>
       </Provider>

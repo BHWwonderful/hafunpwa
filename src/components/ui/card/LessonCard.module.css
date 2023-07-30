@@ -19,13 +19,13 @@
   border: 5px solid var(--tertiary-color);
 }
 
-.advanced{
-  background-color: var(--advanced-background-color);
+.fluent{
+  background-color: var(--fluent-background-color);
   border: 5px solid var(--primary-color);
 }
 
-.proficient{
-  background-color: var(--proficient-background-color);
+.advanced{
+  background-color: var(--advanced-background-color);
   border: 5px solid var(--accent-color);
 }
 

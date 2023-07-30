@@ -27,13 +27,13 @@ font-weight: 700;
 --tertiary-color:rgba(212, 217, 32, 1);
 
 --content-text-color: rgba(136, 136, 136, 1);
---content-background-color: rgba(211, 211, 211, 1);
+--content-background-color: rgba(221, 221, 221, 1);
 --content-border-color: rgba(144, 144, 144, 1);
 
 --beginner-background-color: rgba(255, 237, 99, 0.3);
 --intermediate-background-color: rgba(212, 217, 32, 0.3);
---advanced-background-color: rgba(255, 92, 1, 0.2);
---proficient-background-color: rgba(154, 0, 0, 0.1);
+--fluent-background-color: rgba(255, 92, 1, 0.2);
+--advanced-background-color: rgba(154, 0, 0, 0.1);
 
 --disabled-color: rgba(0, 0, 0, 0.3);
 
@@ -52,6 +52,11 @@ font-family: var(--default-font);
 box-sizing: border-box;
 font-size:1rem;
 font-weight: 400;
+}
+
+html, body{
+  width: 100%;
+  height: 100%;
 }
 
 a {

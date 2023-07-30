@@ -44,12 +44,12 @@ function SelectLevelButton(){
       currentTitle = "Intermediate";
       break;
 
-    case "advanced":
-      currentTitle = "Advanced";
+    case "fluent":
+      currentTitle = "fluent";
       break;
 
-    case "proficient":
-      currentTitle = "Proficient";
+    case "advanced":
+      currentTitle = "Advanced";
       break;
 
     default:
@@ -83,11 +83,11 @@ function SelectLevelButton(){
             <li onMouseDown={() => handleLevelSelection("intermediate")} className={styles.item}>
               <button>Intermediate</button>
             </li>
+            <li onMouseDown={() => handleLevelSelection("fluent")} className={styles.item}>
+              <button>Fluent</button>
+            </li>
             <li onMouseDown={() => handleLevelSelection("advanced")} className={styles.item}>
               <button>Advanced</button>
-            </li>
-            <li onMouseDown={() => handleLevelSelection("proficient")} className={styles.item}>
-              <button>Proficient</button>
             </li>
           </ul>
         </div> : null

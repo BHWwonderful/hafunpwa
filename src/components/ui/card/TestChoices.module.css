@@ -1,0 +1,16 @@
+.choice{
+  width:100%;
+  padding-top:0.75rem;
+  padding-bottom:0.75rem;
+  border : 1px solid var(--content-border-color);
+  cursor: pointer;
+  text-align: center;
+  border-radius: var(--border-radius);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.clicked{
+  background-color: var(--fluent-background-color);
+  border-color: var(--primary-color);
+}

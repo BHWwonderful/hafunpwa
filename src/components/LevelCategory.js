@@ -21,14 +21,14 @@ const levelCategoryData = [
     img: intermediateImg,
   },
   {
-    id: "advanced",
-    title: "Advanced",
+    id: "fluent",
+    title: "Fluent",
     text: "Becoming fluent",
     img: advancedImg,
   },
   {
-    id: "proficient",
-    title: "Proficient",
+    id: "advanced",
+    title: "Advanced",
     text: "Speaking like a native",
     img: proficientImg,
   },
