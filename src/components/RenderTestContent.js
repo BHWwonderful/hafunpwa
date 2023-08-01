@@ -38,7 +38,7 @@ function RenderTestContent({currentLevelTestData, clickedChoiceIndex, currentIma
   }
    else {
     return(
-      <div className={styles.content}>
+    <div className={styles.content}>
       <div className={styles.type}>
         <h2>Q. <strong>Fill in</strong> the blank</h2>
       </div>

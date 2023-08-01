@@ -1,11 +1,13 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
-async function createUserByFirebase(auth, email, password){
+async function createUserByFirebase(email, password){
   try{
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       // Sign in
     const user = userCredential.user;
+    console.log(user);
+    return user;
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;

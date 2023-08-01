@@ -1,7 +1,8 @@
 .content{
+  display: flex;
+  flex-direction: column;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  height:calc(100% - 500px);
 }
 
 .type{
@@ -13,7 +14,7 @@
 }
 
 .question{
-  padding-bottom: 3.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .question h2{
@@ -31,6 +32,7 @@
 
 .choices{
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   align-items: center;
   margin-bottom: -1rem;
