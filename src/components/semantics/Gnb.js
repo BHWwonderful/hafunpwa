@@ -39,7 +39,6 @@ function Gnb(){
 
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname)
 
   const handleChangeRoute = (event, path) => {
     navigate(`${path}`);
