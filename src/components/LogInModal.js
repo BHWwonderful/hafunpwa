@@ -87,6 +87,7 @@ function LogInModal(){
     setNameError(false);
     setPassWordError(false);
     setEmailError(false);
+    setShowPassword(false);
     setIsLogInClicked((prevState) => !prevState);
   }
 
@@ -136,17 +137,22 @@ function LogInModal(){
                  :
                  <LogInHelpButton />
                  }
-                
               </div>
               <div className={passwordError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
                 <label>Password</label>
-                <input className={styles.formInput} onChange={(event) => handleChangePassword(event)} type="password" placeholder="Password" value={password}/>
+                <input className={styles.formInput} onChange={(event) => handleChangePassword(event)} type={showPassword ? "text" : "password"} placeholder="Password" value={password}/>
                 {passwordError ?
                   <LogInWarningButton
                     text={"Password warning"}
                   />
                  :
-                  <div className={styles.warn}></div>
+                  showPassword 
+                  ? <button onClick={(event) => handleToggleShowPassword(event)} className={styles.show}>
+                      <img src={visibilityImg} alt="see password" />
+                    </button>
+                  : <button onClick={(event) => handleToggleShowPassword(event)} className={styles.show}>
+                      <img src={visibilityOffImg} />
+                    </button>
                 }
               </div>
             </div>
@@ -183,7 +189,6 @@ function LogInModal(){
                   text={"We need your email address to create your account. It will not be shared to anyone else"}
                 />
                 }
-                
               </div>
               <div className={passwordError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
                 <label>Password</label>
@@ -201,7 +206,6 @@ function LogInModal(){
                       <img src={visibilityOffImg} />
                     </button>
                 }
-                
               </div>
             </div>
             <div className={styles.buttonContent}>

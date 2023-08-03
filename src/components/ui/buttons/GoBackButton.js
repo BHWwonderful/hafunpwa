@@ -7,7 +7,7 @@ import goBackImg from "../../../assets/images/back.svg"
 // hooks
 import { useNavigate } from "react-router-dom";
 
-function GoBackButton(){
+function GoBackButton({navigation}){
 
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function GoBackButton(){
   }
 
   return(
-    <a onClick={handleGoBackPage} className={styles.button}>
+    <a onClick={navigation ? navigation : handleGoBackPage} className={styles.button}>
       <img src={goBackImg} />
     </a>
   )

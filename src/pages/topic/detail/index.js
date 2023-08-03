@@ -3,12 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // components
-import HeaderContent from "../../../components/semantics/HeaderContent";
 import Gnb from "../../../components/semantics/Gnb";
 import MobileWrapper from "../../../components/layouts/MobileWrapper";
 import Loading from "../../../components/Loading";
 import Header from "../../../components/semantics/Header";
 import GoBackButton from "../../../components/ui/buttons/GoBackButton";
+import SearchButton from "../../../components/ui/buttons/SearchButton";
 
 // api hooks
 import fetchNestedTopicContent from "../../../api/fetchNestedTopicContent";
@@ -27,6 +27,10 @@ function TopicDetailPage(){
 
   const GoToTopicLessonPage = (lesson) => {
     navigate(`/topic/detail/${params.id}/lesson/${lesson}`)
+  }
+
+  const GoBackTopicPage = () => {
+    navigate(`/topic/`);
   }
 
   useEffect(() => {
@@ -55,8 +59,9 @@ function TopicDetailPage(){
     return(
       <MobileWrapper>
         <Header
-          leftChild={<GoBackButton />}
+          leftChild={<GoBackButton navigation={GoBackTopicPage} />}
           centerChild={<h1>{params.id}</h1>}
+          rightChild={<SearchButton />}
         />
         <main className={styles.main}>
           <section>

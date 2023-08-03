@@ -39,7 +39,7 @@
 }
 
 .formContentBox{
-  width:100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -55,7 +55,7 @@
 }
 
 .formInput{
-  flex-grow: 1;
+  width:calc(100% - 64px);
   padding-left: 1rem;
   padding-top:12px;
   padding-bottom:12px;
@@ -64,8 +64,6 @@
   border-radius: var(--border-radius);
   outline: none;
 }
-
-
 
 .buttonContent{
   background-color: var(--fluent-background-color);
@@ -127,7 +125,7 @@
   border: 2px solid var(--content-border-color)
 }
 
-.warn{
+.show{
   width: 2rem;
   height: 2rem;
 }
