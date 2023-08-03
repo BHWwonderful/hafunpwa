@@ -15,6 +15,10 @@ import signInWithEmailAndPasswordByFireBase from "../api/signInWithEmailAndPassw
 // hooks
 import { useState } from "react";
 
+// assets
+import visibilityImg from "../assets/images/visibility.svg";
+import visibilityOffImg from "../assets/images/visibilityoff.svg";
+
 function LogInModal(){
 
   const [nameError, setNameError] = useState(false);
@@ -24,6 +28,8 @@ function LogInModal(){
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const namePattern = /^.{4,}$/;
     // at least 4 characters
@@ -49,7 +55,7 @@ function LogInModal(){
     }
     
     if(namePattern.test(userName) && emailPattern.test(email) && passwordPattern.test(password)){
-      createUserByFirebase(email, password);
+      createUserByFirebase(email, password, userName);
     }
   }
   
@@ -86,7 +92,6 @@ function LogInModal(){
 
   const handleChangeUserName = (event) => {
     setUserName(event.target.value);
-
   }
 
   const handleChangeEmail = (event) => {
@@ -95,6 +100,11 @@ function LogInModal(){
 
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
+  }
+
+  const handleToggleShowPassword = (event) => {
+    event.preventDefault();
+    setShowPassword((prevState) => !prevState)
   }
 
   return(
@@ -116,9 +126,9 @@ function LogInModal(){
           {isLogInClicked ?
             <form onSubmit={handleLogIn} className={styles.form}>
             <div className={styles.formContent}>               
-              <div className={styles.formContentBox}>
+              <div className={emailError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
                 <label>Email</label>
-                <input onChange={(event) => handleChangeEmail(event)} type="email" placeholder="Email" value={email} />
+                <input className={styles.formInput} onChange={(event) => handleChangeEmail(event)} type="text" placeholder="Email" value={email} />
                 {emailError ?
                  <LogInWarningButton
                   text={"Email warning"}
@@ -128,9 +138,9 @@ function LogInModal(){
                  }
                 
               </div>
-              <div className={styles.formContentBox}>
+              <div className={passwordError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
                 <label>Password</label>
-                <input onChange={(event) => handleChangePassword(event)} type="password" placeholder="Password" value={password}/>
+                <input className={styles.formInput} onChange={(event) => handleChangePassword(event)} type="password" placeholder="Password" value={password}/>
                 {passwordError ?
                   <LogInWarningButton
                     text={"Password warning"}
@@ -147,9 +157,9 @@ function LogInModal(){
            :
            <form onSubmit={handleCreateAccount} className={styles.form}>
             <div className={styles.formContent}>               
-              <div className={styles.formContentBox}>
+              <div className={nameError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
                 <label>Name</label>
-                <input onChange={(event) => handleChangeUserName(event)} type="text" placeholder="User Name" value={userName} />
+                <input className={styles.formInput} onChange={(event) => handleChangeUserName(event)} type="text" placeholder="User Name" value={userName} />
                 {nameError ? 
                  <LogInWarningButton
                   text={"Name warning"}
@@ -161,9 +171,9 @@ function LogInModal(){
                 }
                 
               </div>
-              <div className={styles.formContentBox}>
+              <div className={emailError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
                 <label>Email</label>
-                <input onChange={(event) => handleChangeEmail(event)} type="email" placeholder="Email" value={email} />
+                <input className={styles.formInput} onChange={(event) => handleChangeEmail(event)} type="text" placeholder="Email" value={email} />
                 {emailError ?
                   <LogInWarningButton
                     text={"Email warning"}
@@ -175,15 +185,21 @@ function LogInModal(){
                 }
                 
               </div>
-              <div className={styles.formContentBox}>
+              <div className={passwordError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
                 <label>Password</label>
-                <input onChange={(event) => handleChangePassword(event)} type="password" placeholder="Password" value={password}/>
+                <input className={styles.formInput} onChange={(event) => handleChangePassword(event)} type={showPassword ? "text" : "password"} placeholder="Password" value={password}/>
                 {passwordError ?
                   <LogInWarningButton
                     text={"Password warning"}
                   />
                  :
-                  <div className={styles.warn}></div>
+                  showPassword 
+                  ? <button onClick={(event) => handleToggleShowPassword(event)} className={styles.show}>
+                      <img src={visibilityImg} alt="see password" />
+                    </button>
+                  : <button onClick={(event) => handleToggleShowPassword(event)} className={styles.show}>
+                      <img src={visibilityOffImg} />
+                    </button>
                 }
                 
               </div>

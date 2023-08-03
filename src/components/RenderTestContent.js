@@ -10,6 +10,7 @@ import { levelTestActions } from "../store/leveltest-slice";
 
 // Components
 import TestChoices from "./ui/card/TestChoices";
+import Loading from "./Loading";
 
 // custom hooks
 import underlineAnswer from "../api/underlineAnswer";
@@ -31,9 +32,12 @@ function RenderTestContent({currentLevelTestData, clickedChoiceIndex, currentIma
     }
   }, [latestLevelTestData])
 
-  if(dataStatus === "loading" || imageDataStatus === "loading"){
+  if(imageDataStatus === "loading"){
     return(
-      <div></div>
+      <Loading
+        text={"loading Image"}
+        type={"relative"}
+      />
     )
   }
    else {

@@ -5,7 +5,9 @@ import Gnb from "../../components/semantics/Gnb"
 function Lifestyle(){
   return(
     <div>
-      <HeaderContent />
+      <HeaderContent
+        title={"Lifestyle"}
+      />
       <Gnb />
     </div>
   )

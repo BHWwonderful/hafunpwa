@@ -37,7 +37,7 @@ const gnbCategories = [
   },
 ]
 
-function HeaderContent({rightChild}){
+function HeaderContent({rightChild, title}){
 
   const location = useLocation();
   
@@ -49,7 +49,7 @@ function HeaderContent({rightChild}){
     <header className={styles.header}>
       <div className={styles.info}>
         <img src={filteredCategory[0].img} />
-        <h2 className={styles.title}>{filteredCategory[0].title}</h2>
+        <h2 className={styles.title}>{title}</h2>
       </div>
       <div>
         {rightChild}

@@ -1,0 +1,19 @@
+.main{
+  padding-left:1.5rem;
+  padding-right:1.5rem;
+}
+
+.content{
+  margin-bottom: 1rem;
+}
+
+.contentTitle{
+  text-align: center;
+  font-size:40px;
+}
+
+.contentImg{
+  width:100%;
+  cursor: pointer;
+
+}

@@ -37,6 +37,9 @@ font-weight: 700;
 
 --disabled-color: rgba(0, 0, 0, 0.3);
 
+--positive-color: rgba(87, 212, 27, 1);
+--negative-color: rgba(212, 27, 27, 1);
+
 /* fonts */
 --default-font:"EuclidFlex";
 

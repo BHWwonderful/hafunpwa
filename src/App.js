@@ -17,6 +17,7 @@ import Profile from "./pages/profile";
 import LevelTest from "./pages/leveltest";
 import TopicSearchPage from "./pages/topic/search";
 import TopicDetailPage from "./pages/topic/detail";
+import TopicLessonPage from "./pages/topic/detail/lesson";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
               <Route path="/topic" element={<Topic />} />
               <Route path="/topic/search" element={<TopicSearchPage />} />
               <Route path="/topic/detail/:id" element={<TopicDetailPage/>} />
+              <Route path="/topic/detail/:id/lesson/:lesson" element={<TopicLessonPage />} />
               <Route path="/lifestyle" element={<Lifestyle />} />
               <Route path="/qna" element={<Qna />} />
               <Route path="/profile" element={<Profile />} />

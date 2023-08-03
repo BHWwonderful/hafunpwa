@@ -40,8 +40,8 @@ function SearchTopicContent(){
         <div className={styles.img}>
           <img src={searchDisabledImg} />
         </div>
-        <div>
-          <input onChange={handleRenderTopicByKeyword} className={styles.search} type="search" size="20" placeholder="ex) Alphabet"></input>
+        <div className={styles.search}>
+          <input onChange={handleRenderTopicByKeyword} className={styles.searchTopic} type="search" placeholder="ex) Alphabet"></input>
         </div>
       </div>
     </section>

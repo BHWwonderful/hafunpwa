@@ -4,17 +4,36 @@ import Gnb from "../../components/semantics/Gnb";
 import LogInModal from "../../components/LogInModal";
 
 // hooks
-import createUserByFirebase from "../../api/createUserByFirebase";
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Profile(){
 
-  const user = createUserByFirebase("admin123@naver.com", "admin123");
+  const [isLogIn, setIsLogIn] = useState(false);
+
+  const auth = getAuth();
+  console.log(auth.currentUser);
+  
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogIn(true);
+
+      } else {
+        setIsLogIn(false);
+      }
+    })
+  })
 
   return(
     <div>
-      <HeaderContent />
-      <LogInModal />
+      <HeaderContent
+        title={"Profile"}
+      />
+      {isLogIn ? null : <LogInModal />}
       <Gnb />
+      
     </div>
   )
 }

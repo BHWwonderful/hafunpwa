@@ -50,15 +50,22 @@
   padding-right: 1rem;
 }
 
-.formContent input{
-  width:90%;
+.wrong{
+  border-color: var(--negative-color);
+}
+
+.formInput{
+  flex-grow: 1;
   padding-left: 1rem;
   padding-top:12px;
   padding-bottom:12px;
   font-size: 1.5rem;
   font-weight: bold;
   border-radius: var(--border-radius);
+  outline: none;
 }
+
+
 
 .buttonContent{
   background-color: var(--fluent-background-color);

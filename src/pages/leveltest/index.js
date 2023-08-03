@@ -73,7 +73,9 @@ function LevelTest(){
 
   if(isLoading){
     return(
-      <Loading />
+      <Loading
+        text={"initializing Data..."}
+      />
     )
   } else {
 
