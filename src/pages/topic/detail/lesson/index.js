@@ -2,17 +2,22 @@
 import styles from "./TopicLessonPage.module.css"
 
 // hooks
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import TextToSpeechButton from "../../../../components/ui/buttons/TextToSpeechButton";
 
 // Components
 import Gnb from "../../../../components/semantics/Gnb";
 import Header from "../../../../components/semantics/Header";
 import GoBackButton from "../../../../components/ui/buttons/GoBackButton";
 import SearchButton from "../../../../components/ui/buttons/SearchButton";
+import MobileWrapper from "../../../../components/layouts/MobileWrapper";
+import Loading from "../../../../components/Loading";
 
 // api hooks
 import fetchTopicLessonDataFromFireStore from "../../../../api/fetchTopicLessonDataFromFireStore";
-import { useEffect, useState } from "react";
+import fetchTopicContentImagesFromFireStore from "../../../../api/fetchTopicContentImagesFromFireBase";
+
 
 function TopicLessonPage(){
 
@@ -20,6 +25,7 @@ function TopicLessonPage(){
   const navigate = useNavigate();
 
   const [contentData, setContentData] = useState([]);
+  const [imageData, setImageData] = useState([]);
   
   useEffect(() => {
     const getTopicLessonData = async () => {
@@ -29,72 +35,85 @@ function TopicLessonPage(){
     getTopicLessonData();
   }, [])
 
+  useEffect(() => {
+
+    const getImageData = async (imageData) => {
+      const imageUrlDataForLesson2 = await fetchTopicContentImagesFromFireStore(imageData);
+      setImageData(imageUrlDataForLesson2);
+    }
+
+    if(contentData.length > 0){
+      console.log(contentData[0].lessons.lesson2.words);
+      const imageDataForLesson2 = contentData[0].lessons.lesson2.words.map((data) => {
+        return (
+          data.img
+        )
+      })
+      getImageData(imageDataForLesson2);
+    }
+
+
+  }, [contentData])
+
   const handleGoBackToTopicDetailPage = () => {
     navigate(`/topic/detail/${params.id}`)
   }
 
-  if(contentData.length !== 0){
+  if(contentData.length !== 0 && imageData.length !== 0){
+
+    console.log(contentData[0].lessons.lesson2.words[0].word);
+
     return(
-      <div>
-        <Header
-          leftChild={<GoBackButton navigation={handleGoBackToTopicDetailPage} />}
-          centerChild={<h1>{params.lesson}</h1>}
-          rightChild={<SearchButton />}
-        />
-        <main className={styles.main}>
-          <section className={styles.lesson}>
-            <div>
-              <h2 className={styles.title}>{contentData[0].lessons.lesson1.title}</h2>
-            </div>
-            <div>
-              <span>hiya</span>
-              <span>hiya</span>
-              <span>hiya</span>
-              <span>hiya</span>
-              <span>hiya</span>
-              <span>hiya</span>
-              <span>hiya</span>
-              <span>hiya</span>
-            </div>
-          </section>
-          <section className={styles.lesson}>
-            <div>
-              <h2 className={styles.title}>{contentData[0].lessons.lesson2.title}</h2>
-            </div>
-            <div>
-              <ul>
-                <li>hiya</li>
-                <li>hiya</li>
-                <li>hiya</li>
-                <li>hiya</li>
-                <li>hiya</li>
-                <li>hiya</li>
-                <li>hiya</li>
-              </ul>
-            </div>
-          </section>
-          <section className={styles.lesson}>
-            <div>
-              <h2 className={styles.title}>{contentData[0].lessons.lesson3.title}</h2>
-            </div>
-            <div>
-              <div>
-                <img />
-                <span></span>
+      <MobileWrapper>
+        <div>
+          <Header
+            leftChild={<GoBackButton navigation={handleGoBackToTopicDetailPage} />}
+            centerChild={<h1>{params.lesson}</h1>}
+            rightChild={<SearchButton />}
+          />
+          <main className={styles.main}>
+            <section className={styles.lesson}>
+              <div className={styles.titleContainer}>
+                <h2 className={styles.title}>{contentData[0].lessons.lesson1.title}</h2>
               </div>
-              <div>
-                <span></span>
-                <img />
+              <div className={styles.vocabularyContainer}>
+                {contentData[0].lessons.lesson1.words.map((data, index) => {
+                  return (
+                    <div key={index} className={styles.vocabulary}>
+                      <div className={styles.vocabularyImg}>
+                        {data.word.toUpperCase()}{data.word.toLowerCase()}
+                      </div>
+                      <div className={styles.speech}>
+                        <TextToSpeechButton text={data.word} />
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
-            </div>
-          </section>
-        </main>
-        <Gnb />
-      </div>
+            </section>
+            <section className={styles.lesson}>
+              <div className={styles.titleContainer}>
+                <h2 className={styles.title}>{contentData[0].lessons.lesson2.title}</h2>
+              </div>
+              <div className={styles.wordsContainer}>
+                {imageData.map((data, index) => {
+                  return(
+                    <div key={index} className={styles.word}>
+                      <img src={data} />
+                      <TextToSpeechButton text={contentData[0].lessons.lesson2.words[index].word} />
+                    </div>  
+                  )
+                })}
+              </div>
+            </section>
+          </main>
+          <Gnb />
+        </div>
+      </MobileWrapper>
     )
   } else{
     return(
-      <div></div>
+      <Loading />
     )
   }
 

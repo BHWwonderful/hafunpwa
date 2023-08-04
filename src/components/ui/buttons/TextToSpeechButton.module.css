@@ -1,0 +1,18 @@
+.container{
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 32px;
+  height: 32px;
+}
+
+.container span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container span button{
+  text-indent: -9999px;
+  width:32px;
+  height:32px;
+}

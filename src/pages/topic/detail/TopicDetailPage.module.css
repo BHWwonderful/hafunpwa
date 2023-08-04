@@ -4,16 +4,26 @@
 }
 
 .content{
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
 }
 
 .contentTitle{
   text-align: center;
-  font-size:40px;
+  font-size: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.contentLink{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .contentImg{
   width:100%;
-  cursor: pointer;
-
+  object-fit:cover;
+  border-radius: var(--border-radius);
 }

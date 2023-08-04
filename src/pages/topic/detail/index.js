@@ -36,8 +36,8 @@ function TopicDetailPage(){
   useEffect(() => {
     const getNestedTopicContentData = async () => {
       const dataFromFireBase = await fetchNestedTopicContent(params.id);
-      console.log(dataFromFireBase)
-      setContentData(dataFromFireBase);
+      const sortedDataFromFireBaseBySecond = dataFromFireBase.sort((a, b) => a.date.seconds - b.date.seconds);
+      setContentData(sortedDataFromFireBaseBySecond);
     }
     getNestedTopicContentData();
   }, [])
@@ -68,7 +68,7 @@ function TopicDetailPage(){
             {contentData.map((data, index) => {
               return (
               <div className={styles.content} key={data.id}>
-                <a onClick={() => GoToTopicLessonPage(data.title)}>
+                <a className={styles.contentLink} onClick={() => GoToTopicLessonPage(data.title)}>
                   <img className={styles.contentImg} src={ contentImageArray[index] }/>
                 </a>
                 <h2 className={styles.contentTitle}>{data.title}</h2>

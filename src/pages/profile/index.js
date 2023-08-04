@@ -5,14 +5,17 @@ import LogInModal from "../../components/LogInModal";
 
 // hooks
 import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 function Profile(){
 
   const [isLogIn, setIsLogIn] = useState(false);
 
   const auth = getAuth();
-  console.log(auth.currentUser);
+  
+  const logOut = () => {
+    auth.signOut();
+  }
   
 
   useEffect(() => {
@@ -32,6 +35,7 @@ function Profile(){
         title={"Profile"}
       />
       {isLogIn ? null : <LogInModal />}
+      <button onClick={logOut}>로그아웃</button>
       <Gnb />
       
     </div>
