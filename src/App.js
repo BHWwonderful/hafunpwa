@@ -14,11 +14,13 @@ import Lifestyle from "./pages/lifestyle";
 import GlobalStyle from "./GlobalStyles";
 import Qna from "./pages/qna";
 import Profile from "./pages/profile";
+import ProfileSettingPage from "./pages/profile/settings";
 import LevelTest from "./pages/leveltest";
 import TopicSearchPage from "./pages/topic/search";
 import TopicDetailPage from "./pages/topic/detail";
 import TopicLessonPage from "./pages/topic/detail/lesson";
 import LogInPage from "./pages/login";
+
 
 
 function App() {
@@ -49,6 +51,7 @@ function App() {
               <Route path="/lifestyle" element={<Lifestyle />} />
               <Route path="/qna" element={<Qna />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/setting/" element={<ProfileSettingPage />} />
               <Route path="/leveltest/" element={<LevelTest />} />
               <Route path="/login" element={<LogInPage />} />
             </Routes>

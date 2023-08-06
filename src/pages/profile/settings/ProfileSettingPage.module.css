@@ -1,0 +1,40 @@
+.main{
+  padding: 1.5rem;
+}
+
+.submitContainer{
+  margin-bottom: 2rem;
+}
+
+.submit{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.submit h2{
+  font-size: 1.5rem;
+}
+
+
+
+.input{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.input label{
+  width:30%;
+}
+
+.input input{
+  width: 70%;
+  border: 1px solid var(--content-border-color);
+  background-color: var(--content-background-color);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}

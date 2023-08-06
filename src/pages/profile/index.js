@@ -1,7 +1,6 @@
 // Components
 import HeaderContent from "../../components/semantics/HeaderContent";
 import Gnb from "../../components/semantics/Gnb";
-import LogInModal from "../../components/LogInModal";
 
 // hooks
 import { useEffect, useState } from "react";
@@ -23,16 +22,14 @@ function Profile(){
   const auth = getAuth();
 
   const [isLogIn, setIsLogIn] = useState(false);
-  const [isLogInClicked, setIsLogInClicked] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(null);
   
   const logOut = () => {
     auth.signOut();
   }
 
-  const changeIsLogInClicked = () => {
-    setIsLogInClicked(true);
+  const handleGoToProfileSettingPage = () => {
+    navigate("/profile/setting")
   }
 
   useEffect(() => {
@@ -64,7 +61,7 @@ function Profile(){
       <main className={styles.main}>
         <section className={styles.userInfo}>
           <div className={styles.profile}>
-            <a className={styles.profileLink}> 
+            <a onClick={handleGoToProfileSettingPage} className={styles.profileLink}> 
               <img className={styles.profileImg} src={currentUser.photoURL} alt="Profile Image" />
               <img className={styles.edit} src={editImg} alt="Edit Profile" />
             </a>

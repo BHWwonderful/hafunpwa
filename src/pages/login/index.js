@@ -91,7 +91,7 @@ function LogInPage(){
       handleChangeLoading();
       setTimeout(() => {
         navigate("/profile");
-      }, 1000)      
+      }, 3000)      
     }
   }
 
