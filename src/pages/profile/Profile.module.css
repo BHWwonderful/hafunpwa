@@ -1,0 +1,79 @@
+.main{
+  padding-left:1.5rem;
+  padding-right:1.5rem;
+}
+
+.userInfo{
+  margin-bottom: 1.5rem;
+}
+
+.profile{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileLink{
+  position:relative;
+  padding:8px;
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: var(--secondary-color);
+}
+
+.profileImg{
+  width: 96px;
+  height:96px;
+}
+
+.edit{
+  position: absolute;
+  right:0;
+  bottom:0;
+}
+
+.userName{
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.userLevel{
+  margin-top:0.25rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--content-border-color);
+  border-radius: var(--border-radius);
+}
+
+.vocabulary{
+  margin-bottom: 1.5rem;
+  background-color: var(--beginner-background-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+.title {
+  margin-bottom:1rem;
+}
+
+.title h2{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.vocabularyCard{
+  position: relative;
+}
+
+.vocabularyItem{
+  display: flex;
+  margin-top:1rem;
+  margin-bottom:1rem;
+}
+
+.vocabularyItem span{
+  width:50%;
+}
+
+
+

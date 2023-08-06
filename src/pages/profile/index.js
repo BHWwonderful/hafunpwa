@@ -5,41 +5,103 @@ import LogInModal from "../../components/LogInModal";
 
 // hooks
 import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged} from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// CSS
+import styles from "./Profile.module.css";
+
+// assets
+import editImg from "../../assets/images/edit.svg";
 
 function Profile(){
 
-  const [isLogIn, setIsLogIn] = useState(false);
+  const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const auth = getAuth();
+
+  const [isLogIn, setIsLogIn] = useState(false);
+  const [isLogInClicked, setIsLogInClicked] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [selectedImg, setSelectedImg] = useState(null);
   
   const logOut = () => {
     auth.signOut();
   }
-  
+
+  const changeIsLogInClicked = () => {
+    setIsLogInClicked(true);
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsLogIn(true);
-
+        if(user.photoURL !== null){
+          setCurrentUser(user);
+          setIsLogIn(true);
+        }
       } else {
         setIsLogIn(false);
+        navigate("/login")
       }
     })
-  })
+  }, [])
 
-  return(
-    <div>
+  if(!isLogIn){
+    return(
+      <div>Log in Failed!</div>
+    )
+  } else if(isLogIn) {
+
+    return(
+      <div>
       <HeaderContent
         title={"Profile"}
+        rightChild={<button onClick={logOut}>Log out</button>}
       />
-      {isLogIn ? null : <LogInModal />}
-      <button onClick={logOut}>로그아웃</button>
+      <main className={styles.main}>
+        <section className={styles.userInfo}>
+          <div className={styles.profile}>
+            <a className={styles.profileLink}> 
+              <img className={styles.profileImg} src={currentUser.photoURL} alt="Profile Image" />
+              <img className={styles.edit} src={editImg} alt="Edit Profile" />
+            </a>
+            <h2 className={styles.userName}>{currentUser.displayName}</h2>
+            <span className={styles.userLevel}>Beginner</span>
+          </div>
+        </section>
+        <section className={styles.vocabulary}>
+          <div className={styles.title}>
+            <h2>Vocabulary</h2>
+          </div>
+          <div className={styles.vocabularyCard}>
+            <ul>
+              <li className={styles.vocabularyItem}>
+                <span>elephant</span>
+                <span>코끼리</span>
+              </li>
+              <li className={styles.vocabularyItem}>
+                <span>ant</span>
+                <span>개미</span>
+              </li>
+              <li className={styles.vocabularyItem}>
+                <span>hog</span>
+                <span>멧돼지</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </main>
       <Gnb />
-      
     </div>
-  )
+    )
+  } else{
+    return(
+      <div></div>
+    )
+  }
 }
 
 export default Profile

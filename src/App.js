@@ -18,6 +18,7 @@ import LevelTest from "./pages/leveltest";
 import TopicSearchPage from "./pages/topic/search";
 import TopicDetailPage from "./pages/topic/detail";
 import TopicLessonPage from "./pages/topic/detail/lesson";
+import LogInPage from "./pages/login";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
               <Route path="/qna" element={<Qna />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/leveltest/" element={<LevelTest />} />
+              <Route path="/login" element={<LogInPage />} />
             </Routes>
         </BrowserRouter>
       </Provider>

@@ -1,0 +1,56 @@
+.main{
+  padding-left:1.5rem;
+  padding-right:1.5rem;
+}
+
+.postContainer{
+  background-color: var(--content-background-color);
+}
+
+.post{
+  padding-top:1rem;
+  padding-bottom:1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+}
+
+.userInfo{
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.userImg{
+  width:32px;
+  height:32px;
+  background-color: gray;
+  border-radius: 100%;
+}
+
+.userName{
+  margin-left: 0.5rem;
+  font-size:1.5rem;
+  font-weight: bold;
+}
+
+.question{
+  width:100%;
+  margin-bottom: 1rem;
+}
+
+.question p{
+  width:100%;
+  overflow-wrap:break-word;
+  word-break: break-word;
+}
+
+.subscribe{
+  display: flex;
+}
+
+.subscribeButton{
+  display: flex;
+  justify-content: center;
+  width:50%;
+}
+

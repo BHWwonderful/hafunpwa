@@ -1,5 +1,8 @@
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import db from "../Firebase-config";
+import { query, collection, addDoc } from "firebase/firestore/lite";
+
 
 const auth = getAuth();
 const storage = getStorage();
@@ -17,23 +20,23 @@ async function createUserByFirebase(email, password, name){
       const photoURL = await getDownloadURL(storageRef);
 
       await updateProfile(user, { displayName: name, photoURL: photoURL});
+
+      const q = query(collection(db, 'user'));
+      const querySnapshot = await addDoc(q, {
+        name: name,
+        uid: user.uid,
+        email: email,
+        photoURL: photoURL,
+      })
+
     }
   } catch (error) {
     
     const errorCode = error.code;
     const errorMessage = error.message;
+    console.log(errorMessage);
     
   }
 }
 
 export default createUserByFirebase;
-
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Sign in
-//     const user = userCredential.user;
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message
-//   })

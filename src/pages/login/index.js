@@ -1,27 +1,27 @@
 // CSS
-import styles from "./LogInModal.module.css";
+import styles from "./LogInPage.module.css";
 
 // Components
-import LoginButton from "./ui/buttons/LoginButton";
-import Header from "../components/semantics/Header";
-import GoToHomeButton from "../components/ui/buttons/GoToHomeButton";
-import LogInHelpButton from "./ui/buttons/LogInHelpButton";
-import LogInWarningButton from "./ui/buttons/LogInWarningButton";
+import LoginButton from "../../components/ui/buttons/LoginButton";
+import Header from "../../components/semantics/Header";
+import GoToHomeButton from "../../components/ui/buttons/GoToHomeButton";
+import LogInHelpButton from "../../components/ui/buttons/LogInHelpButton";
+import LogInWarningButton from "../../components/ui/buttons/LogInWarningButton";
+import Loading from "../../components/Loading";
 
 // custom hooks
-import createUserByFirebase from "../api/createUserByFirebase";
-import signInWithEmailAndPasswordByFireBase from "../api/signInWithEmailAndPasswordByFirebase";
+import createUserByFirebase from "../../api/createUserByFirebase";
+import signInWithEmailAndPasswordByFireBase from "../../api/signInWithEmailAndPasswordByFirebase";
 
 // hooks
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // assets
-import visibilityImg from "../assets/images/visibility.svg";
-import visibilityOffImg from "../assets/images/visibilityoff.svg";
+import visibilityImg from "../../assets/images/visibility.svg";
+import visibilityOffImg from "../../assets/images/visibilityoff.svg";
 
-function LogInModal({changeIsLogInClicked}){
-
+function LogInPage(){
   const navigate = useNavigate();
 
   const [nameError, setNameError] = useState(false);
@@ -32,7 +32,13 @@ function LogInModal({changeIsLogInClicked}){
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleChangeLoading = () => {
+    setLoading(true);
+  }
 
   const namePattern = /^.{4,}$/;
     // at least 4 characters
@@ -59,7 +65,10 @@ function LogInModal({changeIsLogInClicked}){
     
     if(namePattern.test(userName) && emailPattern.test(email) && passwordPattern.test(password)){
       createUserByFirebase(email, password, userName);
-      toggleIsLogInClicked();
+      handleChangeLoading();
+      setTimeout(() => {
+        navigate("/profile");
+      }, 3000)
     }
   }
   
@@ -79,7 +88,10 @@ function LogInModal({changeIsLogInClicked}){
 
     if(emailPattern.test(email) && passwordPattern.test(password)){
       signInWithEmailAndPasswordByFireBase(email, password);
-      navigate("/");
+      handleChangeLoading();
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1000)      
     }
   }
 
@@ -115,6 +127,7 @@ function LogInModal({changeIsLogInClicked}){
 
   return(
     <div className={styles.content}>
+      {loading ? <Loading text={"Log in..."} /> : null}
       <Header
         leftChild={<GoToHomeButton />}
         rightChild={<LoginButton
@@ -234,4 +247,4 @@ function LogInModal({changeIsLogInClicked}){
   )
 }
 
-export default LogInModal;
+export default LogInPage;
