@@ -45,7 +45,7 @@ function LogInPage(){
     const emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     const passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
 
-  const handleCreateAccount = (event) => {
+  const handleCreateAccount = async (event) => {
     event.preventDefault();
     setNameError(false);
     setPassWordError(false);
@@ -64,15 +64,15 @@ function LogInPage(){
     }
     
     if(namePattern.test(userName) && emailPattern.test(email) && passwordPattern.test(password)){
-      createUserByFirebase(email, password, userName);
       handleChangeLoading();
+      await createUserByFirebase(email, password, userName);
       setTimeout(() => {
         navigate("/profile");
-      }, 3000)
+      }, 2000)
     }
   }
   
-  const handleLogIn = (event) => {
+  const handleLogIn = async (event) => {
     event.preventDefault();
     setNameError(false);
     setPassWordError(false);
@@ -87,11 +87,11 @@ function LogInPage(){
     }
 
     if(emailPattern.test(email) && passwordPattern.test(password)){
-      signInWithEmailAndPasswordByFireBase(email, password);
       handleChangeLoading();
+      await signInWithEmailAndPasswordByFireBase(email, password);
       setTimeout(() => {
         navigate("/profile");
-      }, 3000)      
+      }, 2000)      
     }
   }
 

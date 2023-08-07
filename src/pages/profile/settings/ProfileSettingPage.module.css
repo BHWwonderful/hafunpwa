@@ -79,14 +79,14 @@
   flex-direction: column;
   top:50%;
   left:50%;
-  width: 100%;
+  width: calc(100% - 3rem);
   height: auto;
   background-color: white;
   z-index:9999;
   transform: translate(-50%, -50%);
   border: 3px solid var(--primary-color);
   border-radius: var(--border-radius);
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .credentialTitleContainer{
@@ -110,12 +110,12 @@
 }
 
 .credentialFormInput label{
-  width: 25%;
+  width: 30%;
   margin-right: 0.5rem;
 }
 
 .credentialFormInput input{
-  width: 75%;
+  width: 70%;
   background-color: var(--content-background-color);
   border-radius: var(--border-radius);
   padding:0.5rem 1rem;

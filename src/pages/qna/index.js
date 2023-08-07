@@ -7,37 +7,31 @@ import Loading from "../../components/Loading";
 // hooks
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
-
-// RTK query hooks
-import { useGetQuestionDataQuery } from "../../api/fireStoreApi";
+import db from "../../Firebase-config";
+import { collection, orderBy, query, startAfter, limit, getDocs } from "firebase/firestore/lite";
 
 // CSS
 import styles from "./Qna.module.css";
 
 function Qna(){
 
-  const { data, error, isLoading } = useGetQuestionDataQuery();
-
   const auth = getAuth();
 
+  const [questionData, setQuestionData] = useState([]);
+
+  const getInitialQuestionData = async () => {
+    const q = query(collection(db, 'question'), orderBy('date', 'desc'), limit(5));
+    const querySnapshot = await getDocs(q);
+    const dataFromFirebase = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+    setQuestionData(dataFromFirebase);
+  }
+
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user)
-
-      } else {
-
-      }
-    })
+    getInitialQuestionData()
   }, [])
-
-  if(isLoading){
-    return(
-      <Loading />
-    )
-  } else{
-
-    console.log(data.documents[0].fields.comment.arrayValue.values.length);
 
     return(
       <MobileWrapper>
@@ -51,23 +45,25 @@ function Qna(){
           <section className={styles.postContainer}>
             <div className={styles.post}>
               <div className={styles.userInfo}>
-                <img src={data.documents[0].fields.userImage.stringValue} className={styles.userImg} alt="User Profile Image" />
-                <span className={styles.userName}>{data.documents[0].fields.userName.stringValue}</span>
+                <img className={styles.userImg} alt="User Profile Image" />
+                <span className={styles.userName}></span>
               </div>
               <div className={styles.question}>
-                <p>{data.documents[0].fields.content.stringValue} </p>
+                <p> </p>
               </div>
               <div className={styles.subscribe}>
-                <div className={styles.subscribeButton}>Like {data.documents[0].fields.like.integerValue}</div>
-                <div className={styles.subscribeButton}>Comment {data.documents[0].fields.comment.arrayValue.values.length}</div>
+                <div className={styles.subscribeButton}>Like </div>
+                <div className={styles.subscribeButton}>Comment </div>
               </div>
             </div>
           </section>
         </main>
+        <div className={styles.ask}>
+          <a className={styles.askQuestion}>Ask</a>
+        </div>
         <Gnb />
       </MobileWrapper>
     )
-  }
   }
 
 export default Qna

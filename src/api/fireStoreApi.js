@@ -8,7 +8,7 @@ const fireStoreApi = createApi({
       query: () => "projects/hafun-4d476/databases/(default)/documents/question/",
     }),
     getUserData: builder.query({
-      query: (uid) => `projects/hafun-4d476/databases/(default)/documents/user/`
+      query: () => `projects/hafun-4d476/databases/(default)/documents/user/`
     })
   }),
 })

@@ -54,3 +54,20 @@
   width:50%;
 }
 
+.ask{
+  position: fixed;
+  bottom:104px;
+  right: 24px;
+}
+
+.askQuestion{
+  padding: 0.5rem 2rem;
+  background-color: var(--content-background-color);
+  border-radius: var(--border-radius);
+  font-size: 2rem;
+  cursor: pointer;
+  background-color: var(--fluent-background-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
