@@ -1,4 +1,4 @@
-import { query, collectionGroup, where, getDocs } from "firebase/firestore/lite";
+import { query, collectionGroup, getDocs } from "firebase/firestore/lite";
 import db from "../Firebase-config";
 
 const fetchNestedTopicContent = async (docId) => {

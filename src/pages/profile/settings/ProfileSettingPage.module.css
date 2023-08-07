@@ -17,7 +17,14 @@
   font-size: 1.5rem;
 }
 
-
+.edit{
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: var(--fluent-background-color);
+  border-radius: 10px;
+  font-weight: bold;
+}
 
 .input{
   display: flex;
@@ -37,4 +44,97 @@
   border-radius: var(--border-radius);
   padding: 0.5rem 1rem;
   font-size: 1rem;
+}
+
+.delete{
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--negative-color);
+  color: var(--negative-color);
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.functions{
+  margin-top:2rem;
+}
+
+.functionsTitle{
+  margin-bottom: 2rem;
+}
+
+.functionsTitle h2{
+  font-size: 1.5rem;
+}
+
+.logOut{
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--content-border-color);
+  margin-bottom: 1rem;
+}
+
+.credential{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top:50%;
+  left:50%;
+  width: 100%;
+  height: auto;
+  background-color: white;
+  z-index:9999;
+  transform: translate(-50%, -50%);
+  border: 3px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+}
+
+.credentialTitleContainer{
+  margin-bottom: 1rem;
+}
+
+.credentialTitle{
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.credentialForm{
+  position: relative;
+}
+
+.credentialFormInput{
+  display: flex;
+  align-items: center;
+  margin-top:0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.credentialFormInput label{
+  width: 25%;
+  margin-right: 0.5rem;
+}
+
+.credentialFormInput input{
+  width: 75%;
+  background-color: var(--content-background-color);
+  border-radius: var(--border-radius);
+  padding:0.5rem 1rem;
+}
+
+.credentialFormSubmit{
+  display: flex;
+  flex-direction: column;
+  margin-top:2rem;
+}
+
+.credentialFormSubmit span{
+  margin-bottom: 1rem;
+}
+
+.goBack{
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--content-border-color);
+  border-radius: 10px;
 }
