@@ -33,6 +33,7 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
       dispatch(levelTestActions.resetCurrentImage());
       dispatch(levelTestActions.resetClickedChoiceIndex());
       dispatch(levelTestActions.addQuestionIndex());
+      dispatch(levelTestActions.resetCurrentChoice());
       setIsCorrect(null);
     }
 

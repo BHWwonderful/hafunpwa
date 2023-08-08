@@ -1,0 +1,51 @@
+.post{
+  background-color: white;
+  border: 1px solid black;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.contentLink{
+  cursor: pointer;
+}
+
+.userInfo{
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.userImg{
+  width:32px;
+  height:32px;
+  background-color: gray;
+  border-radius: 100%;
+}
+
+.userName{
+  margin-left: 0.5rem;
+  font-size:1.5rem;
+  font-weight: bold;
+}
+
+.question{
+  width:100%;
+  margin-bottom: 1rem;
+}
+
+.question p{
+  width:100%;
+  overflow-wrap:break-word;
+  word-break: break-word;
+}
+
+.subscribe{
+  display: flex;
+}
+
+.subscribeButton{
+  display: flex;
+  justify-content: center;
+  width:50%;
+}

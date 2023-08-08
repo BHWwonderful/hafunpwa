@@ -5,7 +5,6 @@ import Gnb from "../../components/semantics/Gnb";
 // hooks
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // CSS
@@ -17,8 +16,6 @@ import editImg from "../../assets/images/edit.svg";
 function Profile(){
 
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
   const auth = getAuth();
 
   const [isLogIn, setIsLogIn] = useState(false);

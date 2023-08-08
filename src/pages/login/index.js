@@ -67,7 +67,7 @@ function LogInPage(){
       handleChangeLoading();
       await createUserByFirebase(email, password, userName);
       setTimeout(() => {
-        navigate("/profile");
+        navigate('/profile');
       }, 2000)
     }
   }
@@ -90,7 +90,7 @@ function LogInPage(){
       handleChangeLoading();
       await signInWithEmailAndPasswordByFireBase(email, password);
       setTimeout(() => {
-        navigate("/profile");
+        navigate('/profile');
       }, 2000)      
     }
   }

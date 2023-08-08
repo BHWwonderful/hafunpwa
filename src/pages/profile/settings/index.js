@@ -8,9 +8,9 @@ import GoBackButton from "../../../components/ui/buttons/GoBackButton";
 import Loading from "../../../components/Loading"
 
 // hooks
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged, updateProfile, updateEmail, deleteUser, reauthenticateWithCredential, EmailAuthProvider} from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateProfile, deleteUser, reauthenticateWithCredential, EmailAuthProvider} from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { updateDoc, query, collection, where, getDocs, doc, deleteDoc } from "firebase/firestore/lite";
 import db from "../../../Firebase-config";
@@ -28,7 +28,6 @@ function ProfileSettingPage(){
   const [isUpdate, setIsUpdate] = useState(false);
   
   const [userID, setUserID] = useState("");
-  const photoInputRef = useRef(null);
 
   const [isCredentialClicked, setIsCredentialClicked] = useState(false);
   const [credentialEmail, setCredentialEmail] = useState("");

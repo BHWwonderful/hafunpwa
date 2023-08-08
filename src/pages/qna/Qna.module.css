@@ -3,6 +3,10 @@
   padding-right:1.5rem;
 }
 
+.filter{
+  margin-bottom: 1.5rem;
+}
+
 .postContainer{
   background-color: var(--content-background-color);
 }
@@ -12,6 +16,10 @@
   padding-bottom:1rem;
   margin-bottom: 1rem;
   background-color: white;
+}
+
+.contentLink{
+  cursor: pointer;
 }
 
 .userInfo{

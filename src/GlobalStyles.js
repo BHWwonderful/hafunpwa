@@ -48,7 +48,7 @@ font-weight: 700;
 }
 
 /* Reset.css */
-html, body, header, main, footer, section, div, h1, h2, h3, h4, h5, h6, span, p, button, strong, a, form, ul, li{
+html, body, header, main, footer, section, div, h1, h2, h3, h4, h5, h6, span, p, button, strong, a, form, ul, li, textarea, input{
 margin:0;
 padding:0;
 font-family: var(--default-font);

@@ -82,6 +82,9 @@ const levelTestSlice = createSlice({
     resetIsResultShow(state){
       state.isResultShow = false;
     },
+    resetCurrentChoice(state){
+      state.currentChoice = "";
+    },
     changeCurrentAnswer(state, action){
       state.currentAnswer = action.payload;
     },

@@ -1,0 +1,58 @@
+.main{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.commentContainer{
+  padding-left: 1.5rem;
+  background-color: grey;
+}
+
+.commentUserInfo{
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.commentUserInfo img{
+  width: 32px;
+  height: 32px;
+  background-color: black;
+  border-radius: 100%;
+  margin-right: 0.5rem;
+}
+
+.commentUserInfo span{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.commentContent{
+  padding-left: 40px;
+}
+
+.submitComment{
+  position:fixed;
+  bottom: 0;
+  left:0;
+  width: 100%;
+  padding: 1rem;
+}
+
+.form{
+  width:100%;
+}
+
+.form input{
+  width: 100%;
+  background-color: var(--content-background-color);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+}
+
+.form button{
+  position:absolute;
+  right:25px;
+  bottom:25px;
+}
+
