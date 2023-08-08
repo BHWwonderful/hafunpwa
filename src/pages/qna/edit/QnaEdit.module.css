@@ -1,6 +1,8 @@
 .main{
+  width:100%;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  padding-bottom:1000px;
 }
 
 .commentContainer{
@@ -33,26 +35,34 @@
 
 .submitComment{
   position:fixed;
-  bottom: 0;
-  left:0;
-  width: 100%;
-  padding: 1rem;
+  left: 0;
+  bottom: 1rem;
+  width:100%;
+  margin-top: 1rem;
+  padding-left:1rem;
+  padding-right:1rem;
 }
 
 .form{
+  display: flex;
   width:100%;
+  justify-content: space-between;
+  background-color: var(--content-background-color);
+  border-radius: var(--border-radius);
 }
 
 .form input{
-  width: 100%;
-  background-color: var(--content-background-color);
-  border-radius: var(--border-radius);
+  width:90%;
   padding: 0.5rem 1rem;
+  outline: none;
 }
 
 .form button{
-  position:absolute;
-  right:25px;
-  bottom:25px;
+  width:10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
 }
 

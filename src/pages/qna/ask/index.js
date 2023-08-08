@@ -42,7 +42,6 @@ function QnaAskPage(){
     } catch(error){
       window.alert(error);
     }
-    
   }
 
   const handleChangeContent = (event) => {

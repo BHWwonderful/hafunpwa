@@ -67,7 +67,7 @@ function Qna(){
       const userProfileData = await Promise.all(promises);
       return userProfileData;
     } catch(error) {
-
+      console.log(error);
     }
   }
 
