@@ -1,0 +1,112 @@
+.main{
+  width:100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 80px;
+}
+
+.commentContainer{
+  padding-left: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-right: 1.5rem;
+  border: 1px solid black;
+}
+
+.commentUserInfo{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.commentProfile img{
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  margin-right: 0.5rem;
+}
+
+.commentUserInfo span{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.commentProfile{
+  display: flex;
+}
+
+.noComment{
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.commentContent{
+  padding-left: 40px;
+}
+
+.submitComment{
+  position:fixed;
+  left: 0;
+  bottom: 1rem;
+  width:100%;
+  margin-top: 1rem;
+  padding-left:1rem;
+  padding-right:1rem;
+}
+
+.form{
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+  background-color: var(--content-background-color);
+  border-radius: var(--border-radius);
+}
+
+.form input{
+  width:90%;
+  padding: 0.5rem 1rem;
+  outline: none;
+}
+
+.form button{
+  width:10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.commentFunctions{
+  position:relative;
+}
+
+.commentFunction{
+  width:32px;
+  height:32px;
+}
+
+.commentDropdown{
+  display: block;
+  position:absolute;
+  background-color: white;
+  border: 1px solid var(--content-border-color);
+  width:160px;
+  right:0;
+  top:0;
+  cursor: pointer;
+}
+
+.commentDropdownList li{
+  text-align: center;
+  line-height: 32px;
+  height:32px;
+}
+
+.commentDropdownList li:hover{
+  background-color: var(--content-background-color);
+}
+
+
+

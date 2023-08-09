@@ -14,7 +14,8 @@ import Lifestyle from "./pages/lifestyle";
 import GlobalStyle from "./GlobalStyles";
 import Qna from "./pages/qna";
 import QnaAskPage from "./pages/qna/ask";
-import QnaDetailPage from "./pages/qna/edit";
+import QnaDetailPage from "./pages/qna/detail";
+import QnaEditPage from "./pages/qna/edit";
 import Profile from "./pages/profile";
 import ProfileSettingPage from "./pages/profile/settings";
 import LevelTest from "./pages/leveltest";
@@ -51,7 +52,8 @@ function App() {
               <Route path="/lifestyle" element={<Lifestyle />} />
               <Route path="/qna" element={<Qna />} />
               <Route path="/qna/ask" element={<QnaAskPage />} />
-              <Route path="/qna/edit/:id" element={<QnaDetailPage />} />
+              <Route path="/qna/detail/:id" element={<QnaDetailPage />} />
+              <Route path="/qna/edit/:id" element={<QnaEditPage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/profile/setting/" element={<ProfileSettingPage />} />
               <Route path="/leveltest/" element={<LevelTest />} />

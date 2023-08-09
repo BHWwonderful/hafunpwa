@@ -115,9 +115,14 @@ function Qna(){
     navigate("/qna/ask")
   }
 
+  const handleGoToQnaDetailPage = (id, event) => {
+    navigate(`/qna/detail/${id}`)
+  }
+
   const handleGoToQnaEditPage = (id, event) => {
     navigate(`/qna/edit/${id}`)
   }
+
 
   useEffect(() => {
     getInitialQuestionData();
@@ -129,7 +134,7 @@ function Qna(){
       <Loading />
     )
   } else{
-    console.log(questionData);
+
     return(
       <MobileWrapper>
         <HeaderContent
@@ -149,7 +154,12 @@ function Qna(){
                   content={data.content}
                   like={data.like}
                   comment={data.comment}
-                  navigation={() => handleGoToQnaEditPage(data.id)}
+                  contentUserID={data.userID}
+                  currentUserID={auth.currentUser.uid}
+                  questionID={data.id}
+                  goToDetail={() => handleGoToQnaDetailPage(data.id)}
+                  goToEdit={() => handleGoToQnaEditPage(data.id)}
+                  afterDelete={getInitialQuestionData}
                 />
               )
             })}

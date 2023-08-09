@@ -1,0 +1,64 @@
+.commentContainer{
+  padding-left: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-right: 1.5rem;
+  border: 1px solid black;
+}
+
+.commentUserInfo{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.commentProfile img{
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  margin-right: 0.5rem;
+}
+
+.commentUserInfo span{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.commentProfile{
+  display: flex;
+}
+
+.commentContent{
+  padding-left: 40px;
+}
+
+.commentFunctions{
+  position:relative;
+}
+
+.commentFunction{
+  width:32px;
+  height:32px;
+}
+
+.commentDropdown{
+  display: block;
+  position:absolute;
+  background-color: white;
+  border: 1px solid var(--content-border-color);
+  width:160px;
+  right:0;
+  top:0;
+  cursor: pointer;
+}
+
+.commentDropdownList li{
+  text-align: center;
+  line-height: 32px;
+  height:32px;
+}
+
+.commentDropdownList li:hover{
+  background-color: var(--content-background-color);
+}

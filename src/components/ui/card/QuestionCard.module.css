@@ -1,13 +1,16 @@
 .post{
+  position:relative;
   background-color: white;
   border: 1px solid black;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding: 1.5rem;
   margin-bottom: 1rem;
 }
 
 .contentLink{
+  display: block;
+  width:90%;
   cursor: pointer;
+  margin-bottom: 2rem;
 }
 
 .userInfo{
@@ -48,4 +51,89 @@
   display: flex;
   justify-content: center;
   width:50%;
+}
+
+.functions{
+  position:absolute;
+  right:1.5rem;
+  top:1.5rem;
+}
+
+.functions button{
+  height:32px;
+  width:32px;
+}
+
+.dropdown{
+  display: block;
+  position:absolute;
+  background-color: white;
+  border: 1px solid var(--content-border-color);
+  width:160px;
+  right:0;
+  top:0;
+  cursor: pointer;
+}
+
+.dropdownList li{
+  text-align: center;
+  line-height: 32px;
+  height:32px;
+}
+
+.dropdownList li:hover{
+  background-color: var(--content-background-color);
+}
+
+.delete{
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background-color: white;
+  padding:1.5rem;
+  border: 3px solid var(--primary-color);
+}
+
+.deleteTitle{
+  margin-bottom: 1rem;
+}
+
+.deleteTitle h2{
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.deleteButtons{
+  display: flex;
+  justify-content: center;
+}
+
+.deleteButton{
+  width:50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteContent{
+  padding:0.5rem 1rem;
+  border: 1px solid var(--negative-color);
+  border-radius: 10px;
+  color: var(--negative-color);
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.GoBackToContent{
+  padding:0.5rem 1rem;
+  border: 1px solid var(--content-border-color);
+  border-radius: 10px;
+  color: var(--content-border-color);
+  margin-left: 2rem;
+  margin-right: 2rem;
 }

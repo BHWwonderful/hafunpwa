@@ -39,6 +39,7 @@ function QnaAskPage(){
         userID: userID,
       })
       setIsLoading(false);
+      handleGoBackToQnaPage();
     } catch(error){
       window.alert(error);
     }
@@ -58,26 +59,16 @@ function QnaAskPage(){
     })
   }, [])
 
-  // const q = query(collection(db, 'user'));
-  // const querySnapshot = await addDoc(q, {
-  //   name: name,
-  //   uid: user.uid,
-  //   email: email,
-  //   photoURL: photoURL,
-  // })
-
   return(
     <div className={styles.content}>
-      {isLoading ? <Loading /> : null}
+      {isLoading ? <Loading text={"Submitting..."} /> : null}
       <form onSubmit={(event) => handleSubmitQuestion(event)}>
         <Header
           leftChild={<GoBackButton navigation={handleGoBackToQnaPage} />}
+          centerChild={<h1>Ask question</h1>}
           rightChild={<button disabled={content.trim() === ""} className={content.trim() === "" ? styles.disabled : styles.submit}> Submit</button>}
         />
         <main className={styles.main}>
-          <div className={styles.titleContainer}>
-            <h2 className={styles.title}>Ask question</h2>
-          </div>
           <textarea onChange={(event) => handleChangeContent(event)} className={styles.textarea} />
         </main>
       </form>

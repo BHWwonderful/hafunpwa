@@ -5,7 +5,13 @@ function Loading({text = "Loading...", type}){
 
   let loadingClass;
 
-  type === "relative" ? loadingClass = `${styles.loadingContent}` : loadingClass = `${styles.loading}`;
+  if(type === "relative"){
+    loadingClass = `${styles.loadingContent}`
+  } else if(type === "absolute"){
+    loadingClass = `${styles.loadingAbsolute}`
+  } else {
+    loadingClass = `${styles.loading}`
+  }
 
   return(
       <div className={loadingClass}>

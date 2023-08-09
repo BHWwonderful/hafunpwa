@@ -7,7 +7,7 @@ function Header({leftChild, centerChild, rightChild}){
       <div>
         {leftChild}
       </div>
-      <div>
+      <div className={styles.centerChild}>
         {centerChild}
       </div>
       <div>

@@ -201,7 +201,7 @@ function ProfileSettingPage(){
             </div>
             <div className={styles.credentialFormSubmit}>
               <span>Are you sure you really want to delete your account?</span>
-              <button className={styles.delete}>Yes I do want to delete my account</button>
+              <button className={styles.delete}>Yes I want to delete my account</button>
               <button onClick={handleCloseCredentialModal} className={styles.goBack}>No</button>
             </div>
           </form>
