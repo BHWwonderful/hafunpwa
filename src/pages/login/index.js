@@ -17,6 +17,9 @@ import signInWithEmailAndPasswordByFireBase from "../../api/signInWithEmailAndPa
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { getAuth, signInWithRedirect, GoogleAuthProvider, getRedirectResult } from "firebase/auth";
+import { addDoc, collection, query, getDocs, where } from "firebase/firestore/lite";
+import db from "../../Firebase-config";
 
 // assets
 import visibilityImg from "../../assets/images/visibility.svg";
@@ -26,6 +29,8 @@ import visibilityOffImg from "../../assets/images/visibilityoff.svg";
 import { topicActions } from "../../store/topic-slice";
 
 function LogInPage(){
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -136,7 +141,60 @@ function LogInPage(){
     setShowPassword((prevState) => !prevState)
   }
 
+  const handleLogInByGoogle = () => {
+    signInWithRedirect(auth, provider);
+  }
+
+  const getUserDataFromGoogle = async () => {
+    try{
+      setLoading(true);
+      const result = await getRedirectResult(auth);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+
+      const user = result.user;
+      const queryBeforeAddingDocument = query(collection(db, 'user'), where("email", "==", user.email));
+      const querySnapshotBeforeAddingDocument = await getDocs(queryBeforeAddingDocument);
+
+      if(querySnapshotBeforeAddingDocument.empty){
+          const q = query(collection(db, 'user'));
+        if(currentLevel === "all"){
+          const querySnapshot = await addDoc(q, {
+            name: user.displayName,
+            uid: user.uid,
+            email: user.email,
+            photoURL: user.photoURL,
+            userLevel: "beginner",
+          })
+        } else {
+          const querySnapshot = await addDoc(q, {
+            name: user.displayName,
+            uid: user.uid,
+            email: user.email,
+            photoURL: user.photoURL,
+            userLevel: currentLevel,
+          })
+        }
+      } else{
+        setLoading(false);
+        navigate("/profile");
+      }
+      
+      setLoading(false);
+      navigate("/profile");
+
+    } catch(error){
+      setLoading(false);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      const credential = GoogleAuthProvider.credentialFromError(error);
+    }
+  }
+
   useEffect(() => {
+    getUserDataFromGoogle();
+
     return () => dispatch(topicActions.resetCurrentLevel());
   }, [])
 
@@ -165,10 +223,12 @@ function LogInPage(){
                 <input className={styles.formInput} onChange={(event) => handleChangeEmail(event)} type="text" placeholder="Email" value={email} />
                 {emailError ?
                  <LogInWarningButton
-                  text={"Email warning"}
+                  text={"Please enter a valid email address"}
                  />
                  :
-                 <LogInHelpButton />
+                 <LogInHelpButton
+                  text={"We need your email address to create your account. It will not be shared with anyone else"}
+                 />
                  }
               </div>
               <div className={passwordError ? `${styles.formContentBox} ${styles.wrong}` : `${styles.formContentBox}`}>
@@ -176,7 +236,7 @@ function LogInPage(){
                 <input className={styles.formInput} onChange={(event) => handleChangePassword(event)} type={showPassword ? "text" : "password"} placeholder="Password" value={password}/>
                 {passwordError ?
                   <LogInWarningButton
-                    text={"Password warning"}
+                    text={"Password must be between 8 and 25 characters, contain at least one English letter and one number"}
                   />
                  :
                   showPassword 
@@ -201,11 +261,11 @@ function LogInPage(){
                 <input className={styles.formInput} onChange={(event) => handleChangeUserName(event)} type="text" placeholder="User Name" value={userName} />
                 {nameError ? 
                  <LogInWarningButton
-                  text={"Name warning"}
+                  text={"User name must be minimum 4 characters"}
                  />
                 :
                 <LogInHelpButton
-                  text={"For your online profile"}
+                  text={"User name is for your online profile"}
                 />
                 }
                 
@@ -215,11 +275,11 @@ function LogInPage(){
                 <input className={styles.formInput} onChange={(event) => handleChangeEmail(event)} type="text" placeholder="Email" value={email} />
                 {emailError ?
                   <LogInWarningButton
-                    text={"Email warning"}
+                    text={"Please enter a valid email address"}
                   />
                  :
                  <LogInHelpButton
-                  text={"We need your email address to create your account. It will not be shared to anyone else"}
+                  text={"We need your email address to create your account. It will not be shared with anyone else"}
                 />
                 }
               </div>
@@ -228,7 +288,7 @@ function LogInPage(){
                 <input className={styles.formInput} onChange={(event) => handleChangePassword(event)} type={showPassword ? "text" : "password"} placeholder="Password" value={password}/>
                 {passwordError ?
                   <LogInWarningButton
-                    text={"Password warning"}
+                    text={"Password must be between 8 and 25 characters, contain at least one English letter and one number"}
                   />
                  :
                   showPassword 
@@ -254,7 +314,7 @@ function LogInPage(){
           </div>
           <div className={styles.externalLink}>
             <button className={styles.externalButton}>FaceBook</button>
-            <button className={styles.externalButton}>Google</button>
+            <button onClick={handleLogInByGoogle} className={styles.externalButton}>Google</button>
           </div>
         </section>
       </main>

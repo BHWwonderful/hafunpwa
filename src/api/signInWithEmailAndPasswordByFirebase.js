@@ -10,6 +10,9 @@ const signInWithEmailAndPasswordByFireBase = async (email, password) => {
   } catch(error) {
     const errorCode = error.code;
     const errorMessage = error.message;
+    if(errorMessage.includes("user-not-found")){
+      window.alert("User doesn't exist")
+    }
   }
 }
 

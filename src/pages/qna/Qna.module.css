@@ -7,11 +7,15 @@
   margin-bottom: 1.5rem;
 }
 
+.postContainer{
+  background-color: var(--content-background-color);
+}
+
 .post{
   padding-top:1rem;
   padding-bottom:1rem;
   margin-bottom: 1rem;
-  background-color: white;
+  background-color: var(--content-background-color);
 }
 
 .contentLink{
@@ -78,7 +82,9 @@
 .noMoreQuestion{
   display: flex;
   margin-top: 2rem;
+  padding-bottom: 2rem;
   justify-content: center;
   align-items: center;
+  color: var(--content-border-color)
 }
 

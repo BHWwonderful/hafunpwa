@@ -35,6 +35,8 @@ function Qna(){
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   // 추가로 요청할 데이터가 없을 때 상태
   const [noMore, setNoMore] = useState(false);
+  // 로그인 하지 않은 사용자도 페이지에 접속할 수 있도록 유저 아이디에 대한 기본값을 정해주는 상태
+  const [currentUserID, setCurrentUserID] = useState("user");
 
   const getInitialQuestionData = async () => {
     const q = query(collection(db, 'question'), orderBy('date', 'desc'), limit(5));

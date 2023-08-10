@@ -37,7 +37,9 @@ async function createUserByFirebase(email, password, name, userLevel = "beginner
     
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log(errorMessage);
+    if(errorMessage.includes("already-in-use")){
+      window.alert("This email already exists")
+    }
     
   }
 }
