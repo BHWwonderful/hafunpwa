@@ -14,15 +14,20 @@ import createUserByFirebase from "../../api/createUserByFirebase";
 import signInWithEmailAndPasswordByFireBase from "../../api/signInWithEmailAndPasswordByFirebase";
 
 // hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 // assets
 import visibilityImg from "../../assets/images/visibility.svg";
 import visibilityOffImg from "../../assets/images/visibilityoff.svg";
 
+// actions
+import { topicActions } from "../../store/topic-slice";
+
 function LogInPage(){
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -35,6 +40,8 @@ function LogInPage(){
   const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const currentLevel = useSelector((state) => state.topic.currentLevel);
 
   const handleChangeLoading = () => {
     setLoading(true);
@@ -65,7 +72,11 @@ function LogInPage(){
     
     if(namePattern.test(userName) && emailPattern.test(email) && passwordPattern.test(password)){
       handleChangeLoading();
-      await createUserByFirebase(email, password, userName);
+      if(currentLevel === "all"){
+        await createUserByFirebase(email, password, userName, "beginner");
+      } else {
+        await createUserByFirebase(email, password, userName, currentLevel);
+      }
       setTimeout(() => {
         navigate('/profile');
       }, 2000)
@@ -124,6 +135,10 @@ function LogInPage(){
     event.preventDefault();
     setShowPassword((prevState) => !prevState)
   }
+
+  useEffect(() => {
+    return () => dispatch(topicActions.resetCurrentLevel());
+  }, [])
 
   return(
     <div className={styles.content}>

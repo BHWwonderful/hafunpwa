@@ -5,7 +5,9 @@ import Gnb from "../../components/semantics/Gnb";
 // hooks
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
+import { collection, getDocs, query, where } from "firebase/firestore/lite";
 import { useNavigate } from "react-router-dom";
+import db from "../../Firebase-config";
 
 // CSS
 import styles from "./Profile.module.css";
@@ -20,6 +22,7 @@ function Profile(){
 
   const [isLogIn, setIsLogIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [userLevel, setUserLevel] = useState("");
   
   const logOut = () => {
     auth.signOut();
@@ -29,11 +32,27 @@ function Profile(){
     navigate("/profile/setting")
   }
 
+  const getUserData = async () => {
+    try{
+      const q = query(collection(db, "user"), where("uid", "==", auth.currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      const userDataFromFirebase = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      return userDataFromFirebase;
+    } catch(error){
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         if(user.photoURL !== null){
           setCurrentUser(user);
+          const currentUserData = await getUserData();
+          setUserLevel(currentUserData[0].userLevel)
           setIsLogIn(true);
         }
       } else {
@@ -63,7 +82,7 @@ function Profile(){
               <img className={styles.edit} src={editImg} alt="Edit Profile" />
             </a>
             <h2 className={styles.userName}>{currentUser.displayName}</h2>
-            <span className={styles.userLevel}>Beginner</span>
+            <span className={styles.userLevel}>{userLevel === "" ? "beginner" : userLevel}</span>
           </div>
         </section>
         <section className={styles.vocabulary}>

@@ -7,10 +7,6 @@
   margin-bottom: 1.5rem;
 }
 
-.postContainer{
-  background-color: var(--content-background-color);
-}
-
 .post{
   padding-top:1rem;
   padding-bottom:1rem;
@@ -77,5 +73,12 @@
   background-color: var(--fluent-background-color);
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
+}
+
+.noMoreQuestion{
+  display: flex;
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
 }
 

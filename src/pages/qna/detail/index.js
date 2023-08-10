@@ -74,7 +74,7 @@ function QnaDetailPage(){
 
   const getCommentData = async () => {
     try{
-      const q = query(collection(db, "comment"), where("questionID", "==", params.id), orderBy("date", "desc"));
+      const q = query(collection(db, "comment"), where("questionID", "==", params.id), orderBy("date"));
       const querySnapshot = await getDocs(q);
       const commentDataFromFirebase = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -120,6 +120,7 @@ function QnaDetailPage(){
         userID: userID,
         content: comment,
       })
+      setComment("")
       setIsLoading(false);
 
       await getQuestionDetailData(params.id);

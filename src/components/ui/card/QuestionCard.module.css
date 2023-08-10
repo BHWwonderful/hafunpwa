@@ -69,7 +69,7 @@
   position:absolute;
   background-color: white;
   border: 1px solid var(--content-border-color);
-  width:160px;
+  width:240px;
   right:0;
   top:0;
   cursor: pointer;
@@ -77,8 +77,8 @@
 
 .dropdownList li{
   text-align: center;
-  line-height: 32px;
-  height:32px;
+  line-height: 48px;
+  height:48px;
 }
 
 .dropdownList li:hover{
@@ -125,6 +125,7 @@
   border: 1px solid var(--negative-color);
   border-radius: 10px;
   color: var(--negative-color);
+  font-weight: bold;
   margin-left: 2rem;
   margin-right: 2rem;
 }

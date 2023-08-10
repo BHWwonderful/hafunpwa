@@ -33,6 +33,12 @@
   padding-left: 40px;
 }
 
+.commentContent p{
+  display: block;
+  width:90%;
+  word-break: break-word;
+}
+
 .commentFunctions{
   position:relative;
 }
@@ -47,7 +53,7 @@
   position:absolute;
   background-color: white;
   border: 1px solid var(--content-border-color);
-  width:160px;
+  width:240px;
   right:0;
   top:0;
   cursor: pointer;
@@ -55,8 +61,8 @@
 
 .commentDropdownList li{
   text-align: center;
-  line-height: 32px;
-  height:32px;
+  line-height: 48px;
+  height:48px;
 }
 
 .commentDropdownList li:hover{

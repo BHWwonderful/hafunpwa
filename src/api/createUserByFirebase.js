@@ -6,7 +6,7 @@ import { query, collection, addDoc } from "firebase/firestore/lite";
 
 const auth = getAuth();
 const storage = getStorage();
-async function createUserByFirebase(email, password, name){
+async function createUserByFirebase(email, password, name, userLevel = "beginner"){
   try{
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       // Sign in
@@ -27,7 +27,10 @@ async function createUserByFirebase(email, password, name){
         uid: user.uid,
         email: email,
         photoURL: photoURL,
+        userLevel: userLevel,
       })
+
+      return querySnapshot;
 
     }
   } catch (error) {

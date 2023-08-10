@@ -46,6 +46,7 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
         dispatch(levelTestActions.resetCurrentImage());
         dispatch(levelTestActions.resetClickedChoiceIndex());
         dispatch(levelTestActions.resetDataStatus());
+        dispatch(levelTestActions.resetCurrentChoice());
         dispatch(levelTestActions.changeUserLevel("intermediate"));
         dispatch(topicActions.changeCurrentLevel("intermediate"));
         dispatch(levelTestActions.addQuestionIndex());
@@ -56,6 +57,7 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
         dispatch(levelTestActions.resetCurrentImage());
         dispatch(levelTestActions.resetClickedChoiceIndex());
         dispatch(levelTestActions.resetDataStatus());
+        dispatch(levelTestActions.resetCurrentChoice());
         dispatch(levelTestActions.changeUserLevel("fluent"));
         dispatch(levelTestActions.addQuestionIndex());
       } else if(totalPoint < 33 && userLevel === "fluent"){
@@ -65,6 +67,7 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
         dispatch(levelTestActions.resetCurrentImage());
         dispatch(levelTestActions.resetClickedChoiceIndex());
         dispatch(levelTestActions.resetDataStatus());
+        dispatch(levelTestActions.resetCurrentChoice());
         dispatch(levelTestActions.changeUserLevel("advanced"));
         dispatch(levelTestActions.addQuestionIndex());
       } else if(totalPoint < 52 && userLevel === "advanced"){
@@ -98,7 +101,7 @@ function SubmitTestData({totalContent, currentContent, currentAnswer, currentCho
         )
       ) : 
       <div className={styles.content}>
-        <button onClick={handleIsCorrect} className={styles.button}>submit</button>
+        <button onClick={handleIsCorrect} className={currentChoice == "" ? styles.button : `${styles.button} ${styles.submit}`}>submit</button>
       </div>
       }
     </div>

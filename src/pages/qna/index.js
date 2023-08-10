@@ -8,7 +8,8 @@ import QuestionCard from "../../components/ui/card/QuestionCard";
 // hooks
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth} from "firebase/auth";
+import { getAuth, onAuthStateChanged} from "firebase/auth";
+import { useInView } from "react-intersection-observer";
 import db from "../../Firebase-config";
 import { collection, orderBy, query, startAfter, limit, getDocs, where } from "firebase/firestore/lite";
 
@@ -20,11 +21,19 @@ function Qna(){
   const auth = getAuth();
   const navigate = useNavigate();
 
+  const [ref, inView] = useInView();
+
+  // 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
+  // 현재 페이지에 있는 질문 데아터
   const [questionData, setQuestionData] = useState([]);
+  // 현재 페이지에 있는 유저 데이터
   const [userData, setUserData] = useState([]);
+  // 다음 컨텐츠를 불러올 때 기준이 되는 마지막 데이터
   const [lastQuestionData, setLastQuestionData] = useState(null);
-  const [loadingMore, setLoadingMore] = useState(false);
+  // 다음 컨텐츠를 불러올 때 로딩 상태
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  // 추가로 요청할 데이터가 없을 때 상태
   const [noMore, setNoMore] = useState(false);
 
   const getInitialQuestionData = async () => {
@@ -44,11 +53,45 @@ function Qna(){
       const userProfileDataFromFirebase = await getUserData(userIDArray);
 
       setQuestionData(dataFromFirebase);
-      setUserData(userProfileDataFromFirebase)
+      setUserData(userProfileDataFromFirebase);
+
+      // 이후 추가로 데이터 요청을 할 때 기준 데이터가 될 데이터를 지정
       setLastQuestionData(querySnapshot.docs[querySnapshot.docs.length - 1])
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  const loadMoreQuestionData = async () => {
+    const moreQuery = query(collection(db, 'question'), orderBy('date', 'desc'), startAfter(lastQuestionData), limit(5))
+    try{
+      setIsLoadingMore(true)
+      const moreQuerySnapshot = await getDocs(moreQuery);
+      if(moreQuerySnapshot.empty === true){
+        setIsLoadingMore(false);
+        setNoMore(true);
+        return ;
+      } else {
+        setLastQuestionData(moreQuerySnapshot.docs[moreQuerySnapshot.docs.length - 1]);
+
+        const moreDataFromFirebase = moreQuerySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const moreUserIDArray = moreDataFromFirebase.map((data) => {
+          return(
+            data.userID
+          )
+        })
+        const moreUserProfileDataFromFirebase = await getUserData(moreUserIDArray)
+        setQuestionData((prevData) => [...prevData, ...moreDataFromFirebase]);
+        setUserData((prevData) => [...prevData, ...moreUserProfileDataFromFirebase])
+        setIsLoadingMore(false);
+        return moreDataFromFirebase
+      }
+    } catch(error){
+      console.log(error);
     }
   }
 
@@ -71,46 +114,6 @@ function Qna(){
     }
   }
 
-  // const getUserData = async (userIDArray) => {
-  //   const userProfileData = [];
-  //   try{
-  //     userIDArray.forEach(async (data, index) => {
-  //       const userQuery = query(collection(db, "user"), where("uid", "==", data));
-  //       const userQuerySnapshot = await getDocs(userQuery);
-  //       const userDataFromFirebase = userQuerySnapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       }))
-  //       const array = [...userProfileData, userDataFromFirebase]
-  //     })
-  //     console.log(userProfileData);
-  //   } catch (error) {
-  //     window.alert(error);
-  //   }
-  // } 
-
-  // const getNextQuestionData = async () => {
-  //   const q = query(collection(db, 'question'), orderBy('date', 'desc'), startAfter(lastQuestionData), limit(5));
-  //   try{
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.empty === 0 ? setNoMore(true) : setLastQuestionData(querySnapshot.docs[querySnapshot.docs.length - 1]);
-  //     const dataFromFirebase = querySnapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     }))
-  //     setQuestionData((prevData) => [...prevData, ...dataFromFirebase])
-  //   } catch(error){
-  //     console.log(error);
-  //   }
-  // }
-
-  // const onIntersect = async ([entry], observer) => {
-  //   if (entry.isIntersecting && !loadingMore) {
-  //     observer.unobserve(entry.target);
-  //     setLoadingMore(true);
-  //   }
-  // }
-
   const handleGoToQnaAskPage = () => {
     navigate("/qna/ask")
   }
@@ -123,10 +126,20 @@ function Qna(){
     navigate(`/qna/edit/${id}`)
   }
 
+  useEffect(() => {
+    if (inView && !isLoading) {
+      loadMoreQuestionData();
+    }
+  }, [inView, isLoading])
 
   useEffect(() => {
-    getInitialQuestionData();
-    
+    onAuthStateChanged(auth, (user) => {
+      if(user) {
+        getInitialQuestionData();
+      } else {
+        navigate("/login");
+      }
+    })
   }, [])
 
   if(isLoading){
@@ -163,7 +176,15 @@ function Qna(){
                 />
               )
             })}
+            {noMore ?
+             <div className={styles.noMoreQuestion}>No more question!</div>
+              :
+             null}
+             { isLoadingMore ? <div>로딩 중</div> : null}
           </section>
+          <div ref={ref} className={styles.more}>
+            
+          </div>
         </main>
         <div className={styles.ask}>
           <a onClick={handleGoToQnaAskPage} className={styles.askQuestion}>Ask</a>

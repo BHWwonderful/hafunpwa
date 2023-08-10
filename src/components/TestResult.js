@@ -19,10 +19,15 @@ function TestResult(){
 
   useEffect(() => {
     dispatch(levelTestActions.resetTestData());
+
   }, [])
 
   const goToTopicPage = () => {
     navigate("/topic");
+  }
+
+  const goToLoginPage = () => {
+    navigate("/login");
   }
 
   let userLevelClass;
@@ -59,7 +64,7 @@ function TestResult(){
       </div>
       <div className={styles.links}>
         <a onClick={() => goToTopicPage(userLevel)} className={styles.link}>Go to Topic Page</a>
-        <a className={styles.link}>Sign in / Sign up</a>
+        <a onClick={() => goToLoginPage()} className={styles.link}>Sign in / Sign up</a>
       </div>
   </main>
   )

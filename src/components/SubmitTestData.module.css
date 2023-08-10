@@ -25,6 +25,12 @@
   z-index:31;
 }
 
+.submit{
+  border: 1px solid var(--primary-color);
+  background-color: var(--fluent-background-color);
+  color: black;
+}
+
 .result{
   position:fixed;
   width:100%;
