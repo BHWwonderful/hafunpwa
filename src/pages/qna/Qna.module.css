@@ -1,14 +1,32 @@
 .main{
-  padding-left:1.5rem;
-  padding-right:1.5rem;
+  position: relative;
 }
 
 .filter{
-  margin-bottom: 1.5rem;
+  display: flex;
+  border-bottom: 3rem solid var(--content-background-color);
+}
+
+.filterContainer{
+  display: flex;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-left: -2rem;
+}
+
+.filterContainer a{
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
 }
 
 .postContainer{
   background-color: var(--content-background-color);
+}
+
+.questionCardWrap{
+  margin-bottom: 1.5rem;
 }
 
 .post{

@@ -157,27 +157,31 @@ function Qna(){
         />
         <main className={styles.main}>
           <section className={styles.filter}>
-            <div>All contents</div>
-            <div>Questions that I like</div>
-            <div>My content</div>
+            <div className={styles.filterContainer}>
+              <a>All</a>
+              <a>Like</a>
+              <a>My content</a>
+            </div>
           </section>
           <section className={styles.postContainer}>
             {questionData.map((data, index) => {
               return(
-                <QuestionCard
-                  key={data.id}
-                  userProfileImage={userData[index].photoURL}
-                  userName={userData[index].name}
-                  content={data.content}
-                  like={data.like}
-                  comment={data.comment}
-                  contentUserID={data.userID}
-                  currentUserID={auth.currentUser.uid}
-                  questionID={data.id}
-                  goToDetail={() => handleGoToQnaDetailPage(data.id)}
-                  goToEdit={() => handleGoToQnaEditPage(data.id)}
-                  afterDelete={getInitialQuestionData}
-                />
+                <div className={styles.questionCardWrap}>
+                  <QuestionCard
+                    key={data.id}
+                    userProfileImage={userData[index].photoURL}
+                    userName={userData[index].name}
+                    content={data.content}
+                    like={data.like}
+                    comment={data.comment}
+                    contentUserID={data.userID}
+                    currentUserID={auth.currentUser.uid}
+                    questionID={data.id}
+                    goToDetail={() => handleGoToQnaDetailPage(data.id)}
+                    goToEdit={() => handleGoToQnaEditPage(data.id)}
+                    afterDelete={getInitialQuestionData}
+                  />
+                </div>
               )
             })}
             {noMore ?

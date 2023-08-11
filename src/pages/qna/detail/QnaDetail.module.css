@@ -1,16 +1,18 @@
 .main{
   width:100%;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
   padding-bottom: 80px;
 }
 
+.questionCardWrap{
+  border-bottom: 1.5rem solid var(--content-background-color);
+}
+
+.commentWrap{
+  background-color: var(--content-background-color);
+}
+
 .commentContainer{
-  padding-left: 3rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  padding-right: 1.5rem;
-  border: 1px solid black;
+  margin-bottom: 0.5rem;
 }
 
 .commentUserInfo{
@@ -39,6 +41,7 @@
 .noComment{
   margin-top: 2rem;
   text-align: center;
+  background-color: white;
 }
 
 .commentContent{

@@ -173,16 +173,11 @@ function QnaDetailPage(){
     }
   }, [isInputClicked])
 
-
-
   if(isLoading){
     return(
       <Loading />
     )
   } else{
-
-    console.log(commentData);
-    console.log(commentUserData);
 
     return(
       <div className={styles.mobile}>
@@ -191,36 +186,44 @@ function QnaDetailPage(){
           centerChild={<h1>Detail Question</h1>}
         />
         <main className={styles.main}>
-          <QuestionCard
-            userProfileImage={userData.photoURL}
-            userName={userData.name}
-            content={questionData.content}
-            like={questionData.like}
-            comment={questionData.comment}
-            contentUserID={userData.uid}
-            currentUserID={auth.currentUser.uid}
-            questionID={params.id}
-            goToEdit={() => handleGoToQnaEditPage(params.id)}
-            afterDelete={handleGoBackToQnaPage}
-          />
-          {commentData.length === 0 ?
-            <div className={styles.noComment}>No comment here!</div>
-            :
-            commentData.map((data, index) => {
-              return(
-                <CommentCard
-                  key={index}
-                  userProfileImage={commentUserData[index].photoURL}
-                  userName={commentUserData[index].name}
-                  content={data.content}
-                  currentUserID={auth.currentUser.uid}
-                  contentUserID={data.userID}
-                  commentID={data.id}
-                  afterDelete={() => getQuestionDetailData(params.id)}
-                />
-              )
-            })
-          }
+          <div className={styles.questionCardWrap}>
+            <QuestionCard
+              userProfileImage={userData.photoURL}
+              userName={userData.name}
+              content={questionData.content}
+              like={questionData.like}
+              comment={questionData.comment}
+              contentUserID={userData.uid}
+              currentUserID={auth.currentUser.uid}
+              questionID={params.id}
+              goToEdit={() => handleGoToQnaEditPage(params.id)}
+              afterDelete={handleGoBackToQnaPage}
+            />
+          </div>
+          <div className={styles.commentWrap}>
+            {commentData.length === 0 ?
+              <div className={styles.noComment}>No comment here!</div>
+              :
+              <>              
+                {commentData.map((data, index) => {
+                  return(
+                    <div className={styles.commentContainer}>
+                      <CommentCard
+                        key={index}
+                        userProfileImage={commentUserData[index].photoURL}
+                        userName={commentUserData[index].name}
+                        content={data.content}
+                        currentUserID={auth.currentUser.uid}
+                        contentUserID={data.userID}
+                        commentID={data.id}
+                        afterDelete={() => getQuestionDetailData(params.id)}
+                      />
+                    </div>
+                  )
+                })}
+              </>
+            }
+          </div>
           
         </main>
         <div className={styles.submitComment}>
