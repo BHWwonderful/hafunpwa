@@ -113,8 +113,10 @@
 }
 
 .externalButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40%;
-  text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
   color:var(--content-border-color);
@@ -123,6 +125,33 @@
   background-color: var(--content-background-color);
   border-radius: var(--border-radius);
   border: 2px solid var(--content-border-color)
+}
+
+.google{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-top:12px;
+  padding-bottom:12px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--content-border-color)
+}
+
+.google img{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.google span{
+  font-size: 1.5rem;
+  font-weight: bold;
+  color:var(--content-border-color);
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .show{

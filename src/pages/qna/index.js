@@ -157,7 +157,9 @@ function Qna(){
         />
         <main className={styles.main}>
           <section className={styles.filter}>
-            <div>Filter Content</div>
+            <div>All contents</div>
+            <div>Questions that I like</div>
+            <div>My content</div>
           </section>
           <section className={styles.postContainer}>
             {questionData.map((data, index) => {

@@ -72,7 +72,6 @@ function Profile(){
       <div>
       <HeaderContent
         title={"Profile"}
-        rightChild={<button onClick={logOut}>Log out</button>}
       />
       <main className={styles.main}>
         <section className={styles.userInfo}>

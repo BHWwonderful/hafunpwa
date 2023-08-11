@@ -1,9 +1,9 @@
 .commentContainer{
+  position: relative;
   padding-left: 3rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   padding-right: 1.5rem;
-  border: 1px solid black;
 }
 
 .commentUserInfo{
@@ -31,6 +31,7 @@
 
 .commentContent{
   padding-left: 40px;
+  position: relative;
 }
 
 .commentContent p{
@@ -40,7 +41,9 @@
 }
 
 .commentFunctions{
-  position:relative;
+  position:absolute;
+  top:1.5rem;
+  right:0;
 }
 
 .commentFunction{

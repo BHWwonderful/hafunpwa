@@ -24,6 +24,7 @@ import db from "../../Firebase-config";
 // assets
 import visibilityImg from "../../assets/images/visibility.svg";
 import visibilityOffImg from "../../assets/images/visibilityoff.svg";
+import googleImg from "../../assets/images/google.svg";
 
 // actions
 import { topicActions } from "../../store/topic-slice";
@@ -142,6 +143,7 @@ function LogInPage(){
   }
 
   const handleLogInByGoogle = () => {
+    sessionStorage.clear();
     signInWithRedirect(auth, provider);
   }
 
@@ -159,21 +161,30 @@ function LogInPage(){
       if(querySnapshotBeforeAddingDocument.empty){
           const q = query(collection(db, 'user'));
         if(currentLevel === "all"){
-          const querySnapshot = await addDoc(q, {
+          try{
+            const querySnapshot = await addDoc(q, {
             name: user.displayName,
             uid: user.uid,
             email: user.email,
             photoURL: user.photoURL,
             userLevel: "beginner",
           })
+          } catch(error){
+            console.log(error);
+          }
+          
         } else {
-          const querySnapshot = await addDoc(q, {
+          try{
+            const querySnapshot = await addDoc(q, {
             name: user.displayName,
             uid: user.uid,
             email: user.email,
             photoURL: user.photoURL,
             userLevel: currentLevel,
           })
+          } catch(error){
+            console.log(error);
+          }
         }
       } else{
         setLoading(false);
@@ -314,7 +325,10 @@ function LogInPage(){
           </div>
           <div className={styles.externalLink}>
             <button className={styles.externalButton}>FaceBook</button>
-            <button onClick={handleLogInByGoogle} className={styles.externalButton}>Google</button>
+            <button onClick={handleLogInByGoogle} className={styles.google}>
+              <img src={googleImg} alt="Sing in with Google" />
+              <span>Google</span>
+            </button>
           </div>
         </section>
       </main>

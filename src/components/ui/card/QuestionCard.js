@@ -3,6 +3,9 @@ import styles from "./QuestionCard.module.css";
 
 // assets
 import moreImg from "../../../assets/images/more.svg";
+import likeBeforeImg from "../../../assets/images/likeBefore.svg";
+import likeAfterImg from "../../../assets/images/likeAfter.svg";
+import commentImg from "../../../assets/images/comment.svg";
 
 // components
 import Loading from "../../Loading";
@@ -10,10 +13,10 @@ import Loading from "../../Loading";
 // hooks
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteDoc, doc } from "firebase/firestore/lite";
+import { deleteDoc, doc, addDoc, collection, getDocs, query, where } from "firebase/firestore/lite";
 import db from "../../../Firebase-config";
 
-function QuestionCard({userProfileImage, userName, content, like, comment, questionID, contentUserID, currentUserID, goToDetail, goToEdit, afterDelete }){
+function QuestionCard({userProfileImage, userName, content, questionID, contentUserID, currentUserID, goToDetail, goToEdit, afterDelete }){
 
   const navigate = useNavigate();
 
@@ -21,6 +24,9 @@ function QuestionCard({userProfileImage, userName, content, like, comment, quest
   const [isSameUser, setIsSameUser] = useState(false);
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [isUserLike, setIsUserLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(null);
+  const [commentCount, setCommentCount] = useState(null);
 
   useEffect(() => {
     if(contentUserID === currentUserID && contentUserID !== undefined && currentUserID !== undefined){
@@ -30,6 +36,11 @@ function QuestionCard({userProfileImage, userName, content, like, comment, quest
     return () => {
       setIsSameUser(false);
     }
+  }, [])
+
+  useEffect(() => {
+    getLikeData();
+    getCommentData();
   }, [])
 
   const handleChangeIsDropdownClicked = () => {
@@ -62,6 +73,66 @@ function QuestionCard({userProfileImage, userName, content, like, comment, quest
     }
   }
 
+  const getLikeData = async () => {
+    try{
+      const q = query(collection(db, 'like'), where("questionID", "==", questionID));
+      const querySnapshot = await getDocs(q);
+      if(querySnapshot.empty){
+        setLikeCount(0)
+        return ;
+      } else{
+        const likeQuery = query(collection(db, 'like'), where("userID", "==", currentUserID), where("questionID", "==", questionID));
+        const likeQuerySnapshot = await getDocs(likeQuery);
+        if(likeQuerySnapshot.empty){
+          setLikeCount(querySnapshot.size);
+          setIsUserLike(false);
+          return ;
+        } else{
+          setLikeCount(querySnapshot.size);
+          setIsUserLike(true);
+          return ;
+        }
+      }
+    } catch(error){
+      console.log(error);
+    }
+  }
+
+  const toggleIsUserLike = async () => {
+    try{
+      const q = query(collection(db, 'like'), where("userID", "==", currentUserID), where("questionID", "==", questionID));
+      const querySnapshot = await getDocs(q);
+      if(querySnapshot.empty){
+        const likeCollectionRef = collection(db, "like");
+        const addLike = await addDoc(likeCollectionRef, {
+          questionID: questionID,
+          userID: currentUserID,
+        })
+        await getLikeData();
+        setIsUserLike(true);
+      } else{
+        const currentLikeID = querySnapshot.docs[0].id
+        const likeDoc = doc(db, "like", currentLikeID);
+        const deleteLike = await deleteDoc(likeDoc);
+        await getLikeData();
+        setIsUserLike(false);
+      }
+    } catch(error){
+      console.log(error);
+    }    
+  }
+
+  const getCommentData = async () => {
+    try{
+      const q = query(collection(db, "comment"), where("questionID", "==", questionID));
+      const querySnapshot = await getDocs(q);
+      setCommentCount(querySnapshot.size);
+      return ;
+    } catch(error){
+      console.log(error);
+    }
+  }
+
   return(
     <div className={styles.post}>
       {goToDetail ?
@@ -87,8 +158,28 @@ function QuestionCard({userProfileImage, userName, content, like, comment, quest
       }
 
       <div className={styles.subscribe}>
-        <div className={styles.subscribeButton}>Like {like}</div>
-        <div className={styles.subscribeButton}>Comment {comment}</div>
+        <button onClick={toggleIsUserLike} className={styles.subscribeButton}>
+          {isUserLike ?
+            <img src={likeAfterImg} alt="I like it" />
+          :
+            <img src={likeBeforeImg} alt="I don't like it yet" />
+          }
+          <span className={isUserLike ? styles.likeCountActive : styles.likeCount}>{likeCount === null ? null : likeCount}</span>
+        </button>
+        <div className={styles.subscribeButton}>
+          {goToDetail ?
+            <a className={styles.subscribeDetailLink} onClick={goToDetail}> 
+              <img src={commentImg} alt="Comment" />
+              <span className={styles.commentCount}>{commentCount === null ? null : commentCount}</span>
+            </a>
+           :
+           <>
+            <img src={commentImg} alt="Comment" />
+            <span className={styles.commentCount}>{commentCount === null ? null : commentCount}</span>
+           </>
+           }
+            
+        </div>
       </div>
       <div onBlur={handleResetIsDropdownClicked} className={styles.functions}>
         <button onMouseDown={handleChangeIsDropdownClicked}>
