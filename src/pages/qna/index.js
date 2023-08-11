@@ -37,6 +37,8 @@ function Qna(){
   const [noMore, setNoMore] = useState(false);
   // 로그인 하지 않은 사용자도 페이지에 접속할 수 있도록 유저 아이디에 대한 기본값을 정해주는 상태
   const [currentUserID, setCurrentUserID] = useState("user");
+  // 필터링 조건값을 담는 상태
+  const [filter, setFilter] = useState("all");
 
   const getInitialQuestionData = async () => {
     const q = query(collection(db, 'question'), orderBy('date', 'desc'), limit(5));
@@ -65,10 +67,69 @@ function Qna(){
     }
   }
 
+  const getInitialMyQuestionData = async () => {
+    const q = query(collection(db, 'question'), where("userID", "==", auth.currentUser.uid), orderBy("date", 'desc'), limit(5));
+    try{
+      setIsLoading(true);
+      const querySnapshot = await getDocs(q);
+      const dataFromFirebase = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      const userIDArray = dataFromFirebase.map((data) => {
+        return (
+          data.userID
+        )
+      })
+      const userProfileDataFromFirebase = await getUserData(userIDArray);
+      
+      setQuestionData(dataFromFirebase);
+      setUserData(userProfileDataFromFirebase);
+
+      setLastQuestionData(querySnapshot.docs[querySnapshot.docs.length - 1])
+
+      setIsLoading(false);
+    } catch(error){
+      console.log(error);
+    }
+  }
+
   const loadMoreQuestionData = async () => {
     const moreQuery = query(collection(db, 'question'), orderBy('date', 'desc'), startAfter(lastQuestionData), limit(5))
     try{
       setIsLoadingMore(true)
+      const moreQuerySnapshot = await getDocs(moreQuery);
+      if(moreQuerySnapshot.empty === true){
+        setIsLoadingMore(false);
+        setNoMore(true);
+        return ;
+      } else {
+        setLastQuestionData(moreQuerySnapshot.docs[moreQuerySnapshot.docs.length - 1]);
+
+        const moreDataFromFirebase = moreQuerySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const moreUserIDArray = moreDataFromFirebase.map((data) => {
+          return(
+            data.userID
+          )
+        })
+        const moreUserProfileDataFromFirebase = await getUserData(moreUserIDArray)
+        setQuestionData((prevData) => [...prevData, ...moreDataFromFirebase]);
+        setUserData((prevData) => [...prevData, ...moreUserProfileDataFromFirebase])
+        setIsLoadingMore(false);
+        return moreDataFromFirebase
+      }
+    } catch(error){
+      console.log(error);
+    }
+  }
+
+  const loadMoreMyQuestionData = async () => {
+    const moreQuery = query(collection(db, 'question'), where("userID", "==", auth.currentUser.uid), orderBy('date', 'desc'), startAfter(lastQuestionData), limit(5));
+    try{
+      setIsLoadingMore(true);
       const moreQuerySnapshot = await getDocs(moreQuery);
       if(moreQuerySnapshot.empty === true){
         setIsLoadingMore(false);
@@ -128,21 +189,31 @@ function Qna(){
     navigate(`/qna/edit/${id}`)
   }
 
+  const handleChangeFilter = (index) => {
+    setFilter(index)
+  }
+
   useEffect(() => {
-    if (inView && !isLoading) {
+    if (filter === "all" && inView && !isLoading) {
       loadMoreQuestionData();
+    } else if(filter === "myQuestion" && inView && !isLoading){
+      loadMoreMyQuestionData();
     }
   }, [inView, isLoading])
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if(user) {
-        getInitialQuestionData();
+        if(filter === "all"){
+          getInitialQuestionData();
+        } else if(filter === "myQuestion"){
+          getInitialMyQuestionData();
+        }
       } else {
         navigate("/login");
       }
     })
-  }, [])
+  }, [filter])
 
   if(isLoading){
     return(
@@ -158,17 +229,15 @@ function Qna(){
         <main className={styles.main}>
           <section className={styles.filter}>
             <div className={styles.filterContainer}>
-              <a>All</a>
-              <a>Like</a>
-              <a>My content</a>
+              <a onClick={() => handleChangeFilter("all")}>All</a>
+              <a onClick={() => handleChangeFilter("myQuestion")}>My content</a>
             </div>
           </section>
           <section className={styles.postContainer}>
             {questionData.map((data, index) => {
               return(
-                <div className={styles.questionCardWrap}>
+                <div key={data.id} className={styles.questionCardWrap}>
                   <QuestionCard
-                    key={data.id}
                     userProfileImage={userData[index].photoURL}
                     userName={userData[index].name}
                     content={data.content}
@@ -179,7 +248,7 @@ function Qna(){
                     questionID={data.id}
                     goToDetail={() => handleGoToQnaDetailPage(data.id)}
                     goToEdit={() => handleGoToQnaEditPage(data.id)}
-                    afterDelete={getInitialQuestionData}
+                    afterDelete={filter === "all" ? getInitialQuestionData : getInitialMyQuestionData}
                   />
                 </div>
               )
