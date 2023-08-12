@@ -190,9 +190,8 @@ function QnaDetailPage(){
             <QuestionCard
               userProfileImage={userData.photoURL}
               userName={userData.name}
+              date={questionData.date}
               content={questionData.content}
-              like={questionData.like}
-              comment={questionData.comment}
               contentUserID={userData.uid}
               currentUserID={auth.currentUser.uid}
               questionID={params.id}

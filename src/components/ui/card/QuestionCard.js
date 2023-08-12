@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteDoc, doc, addDoc, collection, getDocs, query, where } from "firebase/firestore/lite";
 import db from "../../../Firebase-config";
 
-function QuestionCard({userProfileImage, userName, content, questionID, contentUserID, currentUserID, goToDetail, goToEdit, afterDelete }){
+function QuestionCard({userProfileImage, userName, content, date, questionID, contentUserID, currentUserID, goToDetail, goToEdit, afterDelete }){
 
   const navigate = useNavigate();
 
@@ -66,8 +66,43 @@ function QuestionCard({userProfileImage, userName, content, questionID, contentU
       setIsDelete(true);
       const documentRef = doc(db, 'question', questionID);
       await deleteDoc(documentRef);
+      await deleteLikeAndComment();
       setIsDelete(false);
       afterDelete();
+    } catch(error){
+      console.log(error);
+    }
+  }
+
+  const deleteLikeAndComment = async () => {
+    try{
+      const likeQuery = query(collection(db, "like"), where("questionID", "==", questionID));
+      const likeQuerySnapshot = await getDocs(likeQuery);
+      const likeDataFromFirebase = likeQuerySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      const likeIDArray = likeDataFromFirebase.map((data) => {
+        return data.id
+      })
+      likeIDArray.forEach(async (id) => {
+        const likeDoc = doc(db, "like", id);
+        const deleteLike = await deleteDoc(likeDoc)
+      })
+      const commentQuery = query(collection(db, "comment"), where("questionID", "==", questionID));
+      const commentQuerySnapshot = await getDocs(commentQuery);
+      const commentDataFromFirebase = commentQuerySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      const commnetIDArray = commentDataFromFirebase.map((data) => {
+        return data.id
+      })
+      commnetIDArray.forEach(async (id) => {
+        const commentDoc = doc(db, "comment", id);
+        const deleteComment = await deleteDoc(commentDoc);
+      })
+      return ;
     } catch(error){
       console.log(error);
     }
@@ -99,6 +134,10 @@ function QuestionCard({userProfileImage, userName, content, questionID, contentU
   }
 
   const toggleIsUserLike = async () => {
+    if(currentUserID === "guest"){
+      navigate("/login/")
+      return;
+    }
     try{
       const q = query(collection(db, 'like'), where("userID", "==", currentUserID), where("questionID", "==", questionID));
       const querySnapshot = await getDocs(q);
@@ -107,6 +146,9 @@ function QuestionCard({userProfileImage, userName, content, questionID, contentU
         const addLike = await addDoc(likeCollectionRef, {
           questionID: questionID,
           userID: currentUserID,
+          contentUserID: contentUserID,
+          content: content,
+          date: date,
         })
         await getLikeData();
         setIsUserLike(true);

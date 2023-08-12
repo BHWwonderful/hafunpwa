@@ -99,10 +99,10 @@
 
 .noMoreQuestion{
   display: flex;
-  margin-top: 2rem;
-  padding-bottom: 2rem;
+  height:4rem;
   justify-content: center;
   align-items: center;
-  color: var(--content-border-color)
+  color: var(--content-border-color);
+  background-color: var(--fluent-background-color);
 }
 

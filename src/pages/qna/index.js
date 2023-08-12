@@ -35,12 +35,11 @@ function Qna(){
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   // 추가로 요청할 데이터가 없을 때 상태
   const [noMore, setNoMore] = useState(false);
-  // 로그인 하지 않은 사용자도 페이지에 접속할 수 있도록 유저 아이디에 대한 기본값을 정해주는 상태
-  const [currentUserID, setCurrentUserID] = useState("user");
   // 필터링 조건값을 담는 상태
   const [filter, setFilter] = useState("all");
 
   const getInitialQuestionData = async () => {
+    setNoMore(false);
     const q = query(collection(db, 'question'), orderBy('date', 'desc'), limit(5));
     try{
       setIsLoading(true);
@@ -49,6 +48,7 @@ function Qna(){
         id: doc.id,
         ...doc.data(),
       }))
+      console.log(dataFromFirebase);
       const userIDArray = dataFromFirebase.map((data) => {
         return (
           data.userID
@@ -94,6 +94,34 @@ function Qna(){
     }
   }
 
+  const getInitialLikeQuestionData = async () => {
+    const q = query(collection(db, 'like'), where("userID", "==", auth.currentUser.uid), orderBy("date", 'desc'), limit(5));
+    try{
+      setIsLoading(true);
+      const querySnapshot = await getDocs(q);
+      const dataFromFirebase = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      const userIDArray = dataFromFirebase.map((data) => {
+        return (
+          data.contentUserID
+        )
+      })
+      const userProfileDataFromFirebase = await getUserData(userIDArray);
+      
+      setQuestionData(dataFromFirebase);
+      setUserData(userProfileDataFromFirebase);
+
+      setLastQuestionData(querySnapshot.docs[querySnapshot.docs.length - 1])
+
+      setIsLoading(false);
+
+    } catch(error){
+      console.log(error);
+    }
+  }
+
   const loadMoreQuestionData = async () => {
     const moreQuery = query(collection(db, 'question'), orderBy('date', 'desc'), startAfter(lastQuestionData), limit(5))
     try{
@@ -127,6 +155,10 @@ function Qna(){
   }
 
   const loadMoreMyQuestionData = async () => {
+    if(!lastQuestionData){
+      setNoMore(true);
+      return ;
+    }
     const moreQuery = query(collection(db, 'question'), where("userID", "==", auth.currentUser.uid), orderBy('date', 'desc'), startAfter(lastQuestionData), limit(5));
     try{
       setIsLoadingMore(true);
@@ -158,9 +190,46 @@ function Qna(){
     }
   }
 
+  const loadMoreLikeQuestionData = async () => {
+    if(!lastQuestionData){
+      setNoMore(true);
+      return ;
+    }
+    const moreQuery = query(collection(db, 'like'), where("userID", "==", auth.currentUser.uid), orderBy('date', 'desc'), startAfter(lastQuestionData), limit(5));
+    try{
+      setIsLoadingMore(true);
+      const moreQuerySnapshot = await getDocs(moreQuery);
+      if(moreQuerySnapshot.empty === true){
+        setIsLoadingMore(false);
+        setNoMore(true);
+        return ;
+      } else {
+        setLastQuestionData(moreQuerySnapshot.docs[moreQuerySnapshot.docs.length - 1]);
+
+        const moreDataFromFirebase = moreQuerySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const moreUserIDArray = moreDataFromFirebase.map((data) => {
+          return(
+            data.contentUserID
+          )
+        })
+        const moreUserProfileDataFromFirebase = await getUserData(moreUserIDArray)
+        setQuestionData((prevData) => [...prevData, ...moreDataFromFirebase]);
+        setUserData((prevData) => [...prevData, ...moreUserProfileDataFromFirebase])
+        setIsLoadingMore(false);
+        return moreDataFromFirebase
+      }
+
+    } catch(error){
+      console.log(error);
+    }
+  }
+
   const getUserData = async (userIDArray) => {
     try {
-      const promises = userIDArray.map(async (data) => {
+        const promises = userIDArray.map(async (data) => {
         const userQuery = query(collection(db, 'user'), where("uid", "==", data));
         const userQuerySnapshot = await getDocs(userQuery);
         const userDataFromFirebase = userQuerySnapshot.docs.map((doc) => ({
@@ -190,7 +259,15 @@ function Qna(){
   }
 
   const handleChangeFilter = (index) => {
-    setFilter(index)
+    if(!auth?.currentUser){
+      navigate("/login/")
+    } else{
+      setFilter(index);
+    }
+  }
+
+  const handleResetFilter = () => {
+    setFilter("all");
   }
 
   useEffect(() => {
@@ -198,6 +275,8 @@ function Qna(){
       loadMoreQuestionData();
     } else if(filter === "myQuestion" && inView && !isLoading){
       loadMoreMyQuestionData();
+    } else if(filter === "like" && inView && !isLoading){
+      loadMoreLikeQuestionData();
     }
   }, [inView, isLoading])
 
@@ -208,9 +287,11 @@ function Qna(){
           getInitialQuestionData();
         } else if(filter === "myQuestion"){
           getInitialMyQuestionData();
+        } else if(filter === "like"){
+          getInitialLikeQuestionData();
         }
       } else {
-        navigate("/login");
+        getInitialQuestionData();
       }
     })
   }, [filter])
@@ -229,8 +310,9 @@ function Qna(){
         <main className={styles.main}>
           <section className={styles.filter}>
             <div className={styles.filterContainer}>
-              <a onClick={() => handleChangeFilter("all")}>All</a>
-              <a onClick={() => handleChangeFilter("myQuestion")}>My content</a>
+              <a onClick={() => handleResetFilter()}>All</a>
+              <a onClick={() => handleChangeFilter("myQuestion")}>My question</a>
+              <a onClick={() => handleChangeFilter("like")}>Like</a>
             </div>
           </section>
           <section className={styles.postContainer}>
@@ -241,14 +323,13 @@ function Qna(){
                     userProfileImage={userData[index].photoURL}
                     userName={userData[index].name}
                     content={data.content}
-                    like={data.like}
-                    comment={data.comment}
-                    contentUserID={data.userID}
-                    currentUserID={auth.currentUser.uid}
-                    questionID={data.id}
-                    goToDetail={() => handleGoToQnaDetailPage(data.id)}
-                    goToEdit={() => handleGoToQnaEditPage(data.id)}
-                    afterDelete={filter === "all" ? getInitialQuestionData : getInitialMyQuestionData}
+                    date={data.date}
+                    contentUserID={filter === "like" ? data.contentUserID : data.userID}
+                    currentUserID={auth?.currentUser?.uid ? auth.currentUser.uid : "guest"}
+                    questionID={filter === "like" ? data.questionID : data.id}
+                    goToDetail={filter === "like" ? () => handleGoToQnaDetailPage(data.questionID) : () => handleGoToQnaDetailPage(data.id)}
+                    goToEdit={filter === "like" ? () => handleGoToQnaEditPage(data.questionID) : () => handleGoToQnaEditPage(data.id)}
+                    afterDelete={filter === "all" ? getInitialQuestionData : filter === "myQuestion" ? getInitialMyQuestionData : getInitialLikeQuestionData}
                   />
                 </div>
               )
