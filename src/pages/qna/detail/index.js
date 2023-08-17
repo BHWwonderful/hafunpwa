@@ -179,8 +179,6 @@ function QnaDetailPage(){
     )
   } else{
 
-    console.log(questionData);
-
     return(
       <div className={styles.mobile}>
         <Header
@@ -189,18 +187,6 @@ function QnaDetailPage(){
         />
         <main className={styles.main}>
           <div className={styles.questionCardWrap}>
-            {/* <QuestionCard
-              userProfileImage={userData.photoURL}
-              userName={userData.name}
-              date={questionData.date}
-              content={questionData.content}
-              contentDate={questionData.date}
-              contentUserID={userData.uid}
-              currentUserID={auth.currentUser.uid}
-              questionID={params.id}
-              goToEdit={() => handleGoToQnaEditPage(params.id)}
-              afterDelete={handleGoBackToQnaPage}
-            /> */}
             <QuestionCard
               userProfileImage={userData.photoURL}
               userName={userData.name}
@@ -221,9 +207,8 @@ function QnaDetailPage(){
               <>              
                 {commentData.map((data, index) => {
                   return(
-                    <div className={styles.commentContainer}>
+                    <div key={index} className={styles.commentContainer}>
                       <CommentCard
-                        key={index}
                         userProfileImage={commentUserData[index].photoURL}
                         userName={commentUserData[index].name}
                         content={data.content}

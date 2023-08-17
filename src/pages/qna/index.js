@@ -309,9 +309,9 @@ function Qna(){
         <main className={styles.main}>
           <section className={styles.filter}>
             <div className={styles.filterContainer}>
-              <a onClick={() => handleResetFilter()}>All</a>
-              <a onClick={() => handleChangeFilter("myQuestion")}>My question</a>
-              <a onClick={() => handleChangeFilter("like")}>Like</a>
+              <a className={filter === "all" ? styles.currentFilter : null} onClick={() => handleResetFilter()}>All</a>
+              <a className={filter === "myQuestion" ? styles.currentFilter : null} onClick={() => handleChangeFilter("myQuestion")}>My question</a>
+              <a className={filter === "like" ? styles.currentFilter : null} onClick={() => handleChangeFilter("like")}>Like</a>
             </div>
           </section>
           <section className={styles.postContainer}>

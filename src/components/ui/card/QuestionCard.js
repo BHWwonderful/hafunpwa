@@ -196,39 +196,39 @@ function QuestionCard({userProfileImage, userName, content, contentDate, date, q
     }
     const minutes = seconds/60;
     if (minutes < 2){
-      return `${Math.floor(minutes)}min ago`
+      return `${Math.floor(minutes)} min ago`
     } else if(minutes >= 2 && minutes < 60){
-      return `${Math.floor(minutes)}mins ago`
+      return `${Math.floor(minutes)} mins ago`
     }
     const hours = minutes/60;
     if (hours < 2){
-      return `${Math.floor(hours)}hour ago`
+      return `${Math.floor(hours)} hour ago`
     } else if(hours >= 2 && hours < 24){
-      return `${Math.floor(hours)}hours ago`
+      return `${Math.floor(hours)} hours ago`
     }
     const days = hours/24;
     if (days < 2){
-      return `${Math.floor(days)}day ago`
+      return `${Math.floor(days)} day ago`
     } else if (days >= 2 && days < 7){
-      return `${Math.floor(days)}days ago`
+      return `${Math.floor(days)} days ago`
     }
     const weeks = days/7;
     if (weeks < 2){
-      return `${Math.floor(weeks)}week ago`
+      return `${Math.floor(weeks)} week ago`
     } else if(weeks >= 2 && weeks < 5){
-      return `${Math.floor(weeks)}weeks ago`
+      return `${Math.floor(weeks)} weeks ago`
     }
     const months = days / 30;
     if(months < 2){
-      return `${Math.floor(months)}month ago`
+      return `${Math.floor(months)} month ago`
     } else if(months >= 2 && months < 12){
-      return `${Math.floor(months)}months ago`
+      return `${Math.floor(months)} months ago`
     }
     const years = days/365;
     if(years < 2){
-      return `${Math.floor(years)}year ago`
+      return `${Math.floor(years)} year ago`
     } else if (years >= 2 && years){
-      return `${Math.floor(years)}years ago`
+      return `${Math.floor(years)} years ago`
     }
   }
 

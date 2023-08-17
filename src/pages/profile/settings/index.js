@@ -26,6 +26,7 @@ function ProfileSettingPage(){
   const [userProfileImg, setUserProfileImg] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
   
   const [userID, setUserID] = useState("");
 
@@ -102,14 +103,99 @@ function ProfileSettingPage(){
     auth.signOut();
   }
 
+  const deleteQuestionAndLikeAndComment = async () => {
+    try{
+      // delete like content with current user ID
+      const likeQuery = query(collection(db, 'like'), where('userID', '==', userID))
+      const likeQuerySnapshot = await getDocs(likeQuery);
+      const likeDataFromFirebase = likeQuerySnapshot.docs.map((doc) => ({
+        id: doc.id,
+      }))
+      const likeIDArray = likeDataFromFirebase.map((data) => {
+        return data.id
+      })
+      likeIDArray.forEach(async (id) => {
+        const likeDoc = doc(db, "like", id);
+        const deleteLike = await deleteDoc(likeDoc);
+      })
+      // delete comment content with current user ID
+      const commentQuery = query(collection(db, "comment"), where("userID", "==", userID))
+      const commentQuerySnapshot = await getDocs(commentQuery);
+      const commentDataFromFirebase = commentQuerySnapshot.docs.map((doc) => ({
+        id: doc.id,
+      }))
+      const commentIDArray = commentDataFromFirebase.map((data) => {
+        return data.id
+      })
+      commentIDArray.forEach(async (id) => {
+        const commentDoc = doc(db, "comment", id);
+        const deleteComment = await deleteDoc(commentDoc);
+      })
+      // delete question content with current user ID
+      const questionQuery = query(collection(db, 'question'), where("userID", "==", userID))
+      const questionQuerySnapshot = await getDocs(questionQuery);
+      const questionDataFromFirebase = questionQuerySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      const questionIDArray = questionDataFromFirebase.map((data) => {
+        return data.id
+      })
+      // await deleting question data before it removes all comment and like data from the questions
+      questionIDArray.forEach(async (id) => {
+        // delete every like data from questions
+        const questionLikeQuery = query(collection(db, "like"), where("questionID", "==", id))
+        const questionLikeQuerySnapshot = await getDocs(questionLikeQuery);
+        const questionLikeDataFromFirebase = questionLikeQuerySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        const questionLikeIDArray = questionLikeDataFromFirebase.map((data) => {
+          return data.id;
+        })
+        questionLikeIDArray.forEach(async (id) => {
+          const questionLikeDoc = doc(db, "like", id);
+          const deleteQuestionLike = await deleteDoc(questionLikeDoc);
+        })
+
+        // delete every comment data from questions
+        const questionCommentQuery = query(collection(db, "comment"), where("questionID", "==", id))
+        const questionCommentQuerySnapshot = await getDocs(questionCommentQuery);
+        const questionCommentDataFromFirebase = questionCommentQuerySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        const questionCommentIDArray = questionCommentDataFromFirebase.map((data) => {
+          return data.id;
+        })
+        questionCommentIDArray.forEach(async (id) => {
+          const questionCommentDoc = doc(db, "comment", id);
+          const deleteQuestionComment = await deleteDoc(questionCommentDoc);
+        })
+      })
+
+      questionIDArray.forEach(async (id) => {
+        const questionDoc = doc(db, "question", id);
+        const deleteQuestion = await deleteDoc(questionDoc);
+      })
+
+      return ;
+    } catch(error){
+      console.log(error);
+    }
+  }
+
   const handleSubmitCredentialUserData = async (event) => {
     event.preventDefault();
     try{
+      setIsDelete(true);
       const user = auth.currentUser;
 
       const credential = await EmailAuthProvider.credential(credentialEmail, credentialPassword);
       
       await reauthenticateWithCredential(user, credential);
+
+      await deleteQuestionAndLikeAndComment();
 
       const q = query(collection(db, "user"), where("uid", "==", userID));
       const querySnapshot = await getDocs(q);
@@ -120,8 +206,9 @@ function ProfileSettingPage(){
       }
 
       await deleteUser(user);
-
+      setIsDelete(false);
     } catch (error) {
+      setIsDelete(true);
       window.alert(error);
     }
   }
@@ -144,6 +231,7 @@ function ProfileSettingPage(){
   return(
     <div>
       {isUpdate ? <Loading text={"Updating Profile"} /> : null}
+      {isDelete ? <Loading text={"Deleteing Account"} /> : null}
       <Header
         leftChild={<GoBackButton navigation={GoBackToProfilePage} />}
         centerChild={<h1>Edit Profile</h1>}
