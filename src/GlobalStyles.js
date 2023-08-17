@@ -28,6 +28,7 @@ font-weight: 700;
 
 --content-text-color: rgba(136, 136, 136, 1);
 --content-background-color: rgba(231, 231, 231, 1);
+--content-background-transparent-color: rgba(104, 104, 104, 0.6);
 --content-border-color: rgba(104, 104, 104, 1);
 
 --beginner-background-color: rgba(255, 237, 99, 0.3);
@@ -72,6 +73,10 @@ background-color: none;
 font-size:inherit;
 }
 
+a, button, span{
+  -webkit-tap-highlight-color: transparent;
+}
+
 strong{
 color: var(--primary-color);
 font-size:inherit;
@@ -92,6 +97,10 @@ border-radius: 0;
 padding:0;
 overflow: visible;
 cursor: pointer;
+}
+
+button:active{
+  background-color: none;
 }
 
 ui, li{

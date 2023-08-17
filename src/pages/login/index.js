@@ -326,7 +326,7 @@ function LogInPage(){
           <div className={styles.externalLink}>
             <button className={styles.externalButton}>FaceBook</button>
             <button onClick={handleLogInByGoogle} className={styles.google}>
-              <img src={googleImg} alt="Sing in with Google" />
+              <img src={googleImg} alt="Sign in with Google" />
               <span>Google</span>
             </button>
           </div>

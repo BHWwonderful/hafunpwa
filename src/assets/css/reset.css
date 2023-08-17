@@ -81,7 +81,7 @@ input{
 }
 
 button{
-  background: inherit;
+  background: red;
   border:none;
   box-shadow: none;
   border-radius: 0;
@@ -89,6 +89,12 @@ button{
   overflow: visible;
   cursor: pointer;
 }
+
+button:active{
+  background-color: white;
+}
+
+button:click
 
 ui, li{
   list-style: none;

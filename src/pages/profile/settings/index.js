@@ -186,25 +186,27 @@ function ProfileSettingPage(){
       <Gnb />
       {isCredentialClicked
       ?
-        <div className={styles.credential}>
-          <div className={styles.credentialTitleContainer}>
-            <h2 className={styles.credentialTitle}><strong>Delete</strong> your account</h2>
+        <div className={styles.credentialWrap}>
+          <div className={styles.credential}>
+            <div className={styles.credentialTitleContainer}>
+              <h2 className={styles.credentialTitle}><strong>Delete</strong> your account</h2>
+            </div>
+            <form onSubmit={(event) => handleSubmitCredentialUserData(event)} className={styles.credentialForm}>
+              <div className={styles.credentialFormInput}>
+                <label>Email</label>
+                <input type="text" onChange={(event) => handleChangeCredentialEmail(event)} />
+              </div>
+              <div className={styles.credentialFormInput}>
+                <label>Password</label>
+                <input type="password" onChange={(event) => handleChangeCredentialPassword(event)} />
+              </div>
+              <div className={styles.credentialFormSubmit}>
+                <span>Are you sure you really want to delete your account?</span>
+                <button className={styles.delete}>Yes I want to delete my account</button>
+                <button onClick={handleCloseCredentialModal} className={styles.goBack}>No</button>
+              </div>
+            </form>
           </div>
-          <form onSubmit={(event) => handleSubmitCredentialUserData(event)} className={styles.credentialForm}>
-            <div className={styles.credentialFormInput}>
-              <label>Email</label>
-              <input type="text" onChange={(event) => handleChangeCredentialEmail(event)} />
-            </div>
-            <div className={styles.credentialFormInput}>
-              <label>Password</label>
-              <input type="password" onChange={(event) => handleChangeCredentialPassword(event)} />
-            </div>
-            <div className={styles.credentialFormSubmit}>
-              <span>Are you sure you really want to delete your account?</span>
-              <button className={styles.delete}>Yes I want to delete my account</button>
-              <button onClick={handleCloseCredentialModal} className={styles.goBack}>No</button>
-            </div>
-          </form>
         </div>
       :
         null
