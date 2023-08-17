@@ -48,7 +48,6 @@ function Qna(){
         id: doc.id,
         ...doc.data(),
       }))
-      console.log(dataFromFirebase);
       const userIDArray = dataFromFirebase.map((data) => {
         return (
           data.userID
@@ -325,6 +324,7 @@ function Qna(){
                     content={data.content}
                     date={data.date}
                     contentUserID={filter === "like" ? data.contentUserID : data.userID}
+                    contentDate={data.date}
                     currentUserID={auth?.currentUser?.uid ? auth.currentUser.uid : "guest"}
                     questionID={filter === "like" ? data.questionID : data.id}
                     goToDetail={filter === "like" ? () => handleGoToQnaDetailPage(data.questionID) : () => handleGoToQnaDetailPage(data.id)}

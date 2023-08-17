@@ -17,6 +17,13 @@
   margin-bottom: 1rem;
 }
 
+.userInfoDetail{
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+  margin-left: 0.5rem;
+}
+
 .userImg{
   width:32px;
   height:32px;
@@ -25,9 +32,12 @@
 }
 
 .userName{
-  margin-left: 0.5rem;
   font-size:1.5rem;
   font-weight: bold;
+}
+
+.timeToNow{
+  font-size: 0.5rem;
 }
 
 .question{

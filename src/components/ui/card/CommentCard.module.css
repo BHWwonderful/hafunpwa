@@ -14,6 +14,11 @@
   margin-bottom: 1rem;
 }
 
+.commentProfile{
+  display: flex;
+  align-items: center;
+}
+
 .commentProfile img{
   width: 32px;
   height: 32px;
@@ -21,9 +26,19 @@
   margin-right: 0.5rem;
 }
 
-.commentUserInfo span{
+.userInfoDetail{
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+}
+
+.userName{
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.timeToNow{
+  font-size: 0.5rem;
 }
 
 .commentProfile{

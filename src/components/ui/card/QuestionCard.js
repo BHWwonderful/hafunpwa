@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteDoc, doc, addDoc, collection, getDocs, query, where } from "firebase/firestore/lite";
 import db from "../../../Firebase-config";
 
-function QuestionCard({userProfileImage, userName, content, date, questionID, contentUserID, currentUserID, goToDetail, goToEdit, afterDelete }){
+function QuestionCard({userProfileImage, userName, content, contentDate, date, questionID, contentUserID, currentUserID, goToDetail, goToEdit, afterDelete }){
 
   const navigate = useNavigate();
 
@@ -27,6 +27,9 @@ function QuestionCard({userProfileImage, userName, content, date, questionID, co
   const [isUserLike, setIsUserLike] = useState(false);
   const [likeCount, setLikeCount] = useState(null);
   const [commentCount, setCommentCount] = useState(null);
+
+  // 디바운싱을 위한 타이머
+  const [timer, setTimer] = useState(0);
 
   useEffect(() => {
     if(contentUserID === currentUserID && contentUserID !== undefined && currentUserID !== undefined){
@@ -134,34 +137,43 @@ function QuestionCard({userProfileImage, userName, content, date, questionID, co
   }
 
   const toggleIsUserLike = async () => {
+
     if(currentUserID === "guest"){
       navigate("/login/")
       return;
     }
-    try{
-      const q = query(collection(db, 'like'), where("userID", "==", currentUserID), where("questionID", "==", questionID));
-      const querySnapshot = await getDocs(q);
-      if(querySnapshot.empty){
-        const likeCollectionRef = collection(db, "like");
-        const addLike = await addDoc(likeCollectionRef, {
-          questionID: questionID,
-          userID: currentUserID,
-          contentUserID: contentUserID,
-          content: content,
-          date: date,
-        })
-        await getLikeData();
-        setIsUserLike(true);
-      } else{
-        const currentLikeID = querySnapshot.docs[0].id
-        const likeDoc = doc(db, "like", currentLikeID);
-        const deleteLike = await deleteDoc(likeDoc);
-        await getLikeData();
-        setIsUserLike(false);
-      }
-    } catch(error){
-      console.log(error);
-    }    
+
+    if(timer) {
+      clearTimeout(timer);
+    }
+
+    const newTimer = setTimeout(async () => {
+      try{
+        const q = query(collection(db, 'like'), where("userID", "==", currentUserID), where("questionID", "==", questionID));
+        const querySnapshot = await getDocs(q);
+        if(querySnapshot.empty){
+          const likeCollectionRef = collection(db, "like");
+          const addLike = await addDoc(likeCollectionRef, {
+            questionID: questionID,
+            userID: currentUserID,
+            contentUserID: contentUserID,
+            content: content,
+            date: date,
+          })
+          await getLikeData();
+          setIsUserLike(true);
+        } else{
+          const currentLikeID = querySnapshot.docs[0].id
+          const likeDoc = doc(db, "like", currentLikeID);
+          const deleteLike = await deleteDoc(likeDoc);
+          await getLikeData();
+          setIsUserLike(false);
+        }
+      } catch(error){
+        console.log(error);
+      }   
+    }, 800);
+    setTimer(newTimer);   
   }
 
   const getCommentData = async () => {
@@ -175,13 +187,61 @@ function QuestionCard({userProfileImage, userName, content, date, questionID, co
     }
   }
 
+  const getHowLongPassed = (date) => {
+    const timestampToDate = date.toDate();
+    const milliSeconds = new Date() - timestampToDate;
+    const seconds = milliSeconds / 1000;
+    if (seconds < 60){
+      return 'just now'
+    }
+    const minutes = seconds/60;
+    if (minutes < 2){
+      return `${Math.floor(minutes)}min ago`
+    } else if(minutes >= 2 && minutes < 60){
+      return `${Math.floor(minutes)}mins ago`
+    }
+    const hours = minutes/60;
+    if (hours < 2){
+      return `${Math.floor(hours)}hour ago`
+    } else if(hours >= 2 && hours < 24){
+      return `${Math.floor(hours)}hours ago`
+    }
+    const days = hours/24;
+    if (days < 2){
+      return `${Math.floor(days)}day ago`
+    } else if (days >= 2 && days < 7){
+      return `${Math.floor(days)}days ago`
+    }
+    const weeks = days/7;
+    if (weeks < 2){
+      return `${Math.floor(weeks)}week ago`
+    } else if(weeks >= 2 && weeks < 5){
+      return `${Math.floor(weeks)}weeks ago`
+    }
+    const months = days / 30;
+    if(months < 2){
+      return `${Math.floor(months)}month ago`
+    } else if(months >= 2 && months < 12){
+      return `${Math.floor(months)}months ago`
+    }
+    const years = days/365;
+    if(years < 2){
+      return `${Math.floor(years)}year ago`
+    } else if (years >= 2 && years){
+      return `${Math.floor(years)}years ago`
+    }
+  }
+
   return(
     <div className={styles.post}>
       {goToDetail ?
         <a onClick={goToDetail} className={styles.contentLink}>
           <div className={styles.userInfo}>
             <img className={styles.userImg} src={userProfileImage} alt="User Profile Image" />
-            <span className={styles.userName}>{userName}</span>
+            <div className={styles.userInfoDetail}>
+              <span className={styles.userName}>{userName}</span>
+              <span className={styles.timeToNow}>{getHowLongPassed(contentDate)}</span>
+            </div>
           </div>
           <div className={styles.question}>
             <p>{content}</p>
@@ -191,7 +251,10 @@ function QuestionCard({userProfileImage, userName, content, date, questionID, co
         <>
           <div className={styles.userInfo}>
             <img className={styles.userImg} src={userProfileImage} alt="User Profile Image" />
-            <span className={styles.userName}>{userName}</span>
+            <div className={styles.userInfoDetail}>
+              <span className={styles.userName}>{userName}</span>
+              <span className={styles.timeToNow}>{getHowLongPassed(contentDate)}</span>
+            </div>
           </div>
           <div className={styles.question}>
             <p>{content}</p>
@@ -231,9 +294,9 @@ function QuestionCard({userProfileImage, userName, content, date, questionID, co
           <div className={styles.dropdown}>
           {isSameUser ?
             <ul className={styles.dropdownList}>
-              <li onClick={goToEdit}>
+              {/* <li onClick={goToEdit}>
                 <a>Edit</a>
-              </li>
+              </li> */}
               <li onClick={handleChangeIsDeleteClicked}>
                 <a>Delete</a>
               </li>
