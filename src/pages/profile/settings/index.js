@@ -42,10 +42,6 @@ function ProfileSettingPage(){
     setUserName(event.target.value);
   }
 
-  const handleChangeUserEmail = (event) => {
-    setUserEmail(event.target.value);
-  }
-
   const handleChangeUserProfileImg = (event) => {
     setUserProfileImg(event.target.files[0]);
   }
@@ -255,7 +251,7 @@ function ProfileSettingPage(){
             </div>
             <div className={styles.input}>
               <label>Email</label>
-              <input id="emailInput" onChange={(event) => handleChangeUserEmail(event)} type="text" value={userEmail} />
+              <input id="emailInput" type="text" value={userEmail} readOnly />
             </div>
           </section>
         </form>

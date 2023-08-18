@@ -11,7 +11,6 @@ import Gnb from "../../../../components/semantics/Gnb";
 import Header from "../../../../components/semantics/Header";
 import GoBackButton from "../../../../components/ui/buttons/GoBackButton";
 import SearchButton from "../../../../components/ui/buttons/SearchButton";
-import MobileWrapper from "../../../../components/layouts/MobileWrapper";
 import Loading from "../../../../components/Loading";
 
 // api hooks
@@ -43,7 +42,6 @@ function TopicLessonPage(){
     }
 
     if(contentData.length > 0){
-      console.log(contentData[0].lessons.lesson2.words);
       const imageDataForLesson2 = contentData[0].lessons.lesson2.words.map((data) => {
         return (
           data.img
@@ -61,10 +59,7 @@ function TopicLessonPage(){
 
   if(contentData.length !== 0 && imageData.length !== 0){
 
-    console.log(contentData[0].lessons.lesson2.words[0].word);
-
     return(
-      <MobileWrapper>
         <div>
           <Header
             leftChild={<GoBackButton navigation={handleGoBackToTopicDetailPage} />}
@@ -109,7 +104,6 @@ function TopicLessonPage(){
           </main>
           <Gnb />
         </div>
-      </MobileWrapper>
     )
   } else{
     return(

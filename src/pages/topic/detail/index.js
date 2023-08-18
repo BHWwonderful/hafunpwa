@@ -57,7 +57,7 @@ function TopicDetailPage(){
 
   if(contentData.length !== 0 && contentImageArray.length !== 0){
     return(
-      <MobileWrapper>
+      <div className={styles.wrap}>
         <Header
           leftChild={<GoBackButton navigation={GoBackTopicPage} />}
           centerChild={<h1>{params.id}</h1>}
@@ -78,7 +78,7 @@ function TopicDetailPage(){
           </section>
         </main>
         <Gnb />
-      </MobileWrapper>
+      </div>
     )
   } else{
     return(

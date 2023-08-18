@@ -172,7 +172,7 @@ function QuestionCard({userProfileImage, userName, content, contentDate, date, q
       } catch(error){
         console.log(error);
       }   
-    }, 800);
+    }, 400);
     setTimer(newTimer);   
   }
 
