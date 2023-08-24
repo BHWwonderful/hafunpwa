@@ -14,19 +14,19 @@ React, Redux, Firebase, CSS module
 
 ## 주요 기능
 
-:+1: 레벨 테스트
+### 레벨 테스트
 
 
 재밌고 동적인 레벨 테스트 기능을 만들고자 듀오링고의 문제 풀기 기능을 참조했습니다.
 
 ![Animation](https://github.com/BHWwonderful/hafunpwa/assets/131639108/ff1da38e-e558-4d9d-aca8-eebe9d7a7c02)
 
-### 레벨 테스트 세부 기능
+#### 레벨 테스트 세부 기능
 1. 사용자가 선택지를 누르기 전에는 제출 버튼이 비활성화됩니다.
 2. 사용자가 현재 풀고 있는 문제의 레벨에 따라 진행바의 색상이 바뀝니다.
 3. 사용자는 문제를 풀며 각 정답을 맞출 시 Redux가 가진 사용자 정보에서 총 점수가 문제에 할당한 만큼 더해지며 각 레벨 별 beginner/intermediate/fluent/advanced 문제를 다 풀었을 경우, 내부에 부여한 점수 컷을 넘기지 못 한다면 결과 컴포넌트가 출력됩니다.
 
-:+1: 영어 강의 기능
+### 영어 강의 기능
 
 
 유저가 강의 컨텐츠를 영국 발음으로 들을 수 있게 버튼을 클릭 시 음성이 출력되도록 설정했습니다.
@@ -34,18 +34,18 @@ React, Redux, Firebase, CSS module
 
 ![topic](https://github.com/BHWwonderful/hafunpwa/assets/131639108/eff375c6-2382-4e77-9cd8-59d47105c1c4)
 
-## 영어 강의 세부 기능
+#### 영어 강의 세부 기능
 사용자가 Topic 페이지 내에서 어느 위치에서든 새로운 Topic을 찾을 수 있도록 검색 기능을 추가했습니다.
 
 ![topicSearch](https://github.com/BHWwonderful/hafunpwa/assets/131639108/dce54c04-1be0-4254-8539-a7242258564f)
 
 
-:+1: 영어와 연관된 유투브 동영상 컨텐츠 제공(추후 제작 예정)
+### 영어와 연관된 유투브 동영상 컨텐츠 제공(추후 제작 예정)
 
 
 Youtube data API를 활용하여 영어 발음, 영국 문화에 관한 컨텐츠를 넣을 예정입니다.
 
-:+1: 회원가입, 로그인 기능
+### 회원가입, 로그인 기능
 
 회원가입 기능으로는 사용자가 물음표를 클릭했을 때 해당 정보가 왜 웹 사이트에서 필요한지, 어디에 사용할 것인지 알려줍니다.
 
@@ -57,12 +57,12 @@ Youtube data API를 활용하여 영어 발음, 영국 문화에 관한 컨텐�
 
 ![Log in](https://github.com/BHWwonderful/hafunpwa/assets/131639108/516e3f65-770e-478e-9478-a4c0813f3ecd)
 
-### 로그인 세부 기능
+#### 로그인 세부 기능
 구글 소셜 로그인 기능을 통해 구글 계정으로 로그인을 진행할 수 있습니다.
 
 ![Google Login](https://github.com/BHWwonderful/hafunpwa/assets/131639108/5c4a1503-0b6e-44d2-ba83-d80d24b167c5)
 
-:+1: 프로필 기능
+### 프로필 기능
 
 소셜 로그인을 사용했을 경우 구글에서 제공해주는 아이디의 프로필 사진, 계정 이름을 그대로 받아옵니다. 또한 Edit 기능을 통해 프로필 이미지, 유저 이름을 변경할 수 있습니다.
 
@@ -72,7 +72,7 @@ Youtube data API를 활용하여 영어 발음, 영국 문화에 관한 컨텐�
 
 ![Alexxandra Login](https://github.com/BHWwonderful/hafunpwa/assets/131639108/0c46c147-0003-406c-a8c3-a63ab3d3e18e)
 
-### 프로필 세부 기능
+#### 프로필 세부 기능
 
 Log out 버튼을 클릭하면 웹 사이트에서 로그아웃 할 수 있으며 가입할 떄 사용했던 이메일, 비밀번호를 재입력하여 계정을 삭제할 수 있습니다.
 
