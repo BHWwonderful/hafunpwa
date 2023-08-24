@@ -1,5 +1,6 @@
 # HAFUN 프로젝트
 
+[HAFUN 배포 링크](https://hafun-4d476.web.app/)
 
 해당 프로젝트는 다음과 같은 목적으로 진행되고 있습니다
 
